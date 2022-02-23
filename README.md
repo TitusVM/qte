@@ -1,0 +1,2 @@
+# Data collection on LoL
+
