@@ -1,2 +1,2 @@
-# Data collection on LoL
+# A quicktime event and aiming challenge game
 
