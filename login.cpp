@@ -33,11 +33,14 @@ void Login::checkConnexion()
     }
 }
 
+<<<<<<< HEAD
 void Login::newAccount()
 {
     new NewAccount(this);
 }
 
+=======
+>>>>>>> 270c0c9 (Login's logic development)
 Login::~Login()
 {
 
