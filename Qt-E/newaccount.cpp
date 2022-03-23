@@ -39,7 +39,8 @@ void NewAccount::createUI()
     setLayout(vbox);
 }
 
-void NewAccount::createAccount()
+// SLOTS
+void NewAccount::slotSubmit()
 {
     QFile file("users.txt");
 
@@ -61,24 +62,19 @@ void NewAccount::createAccount()
             this->password = this->linePassword->text();
             if (password == this->lineVerifPassword->text())
             {
-                out << this->username << " , " << this->password;
+                out << "\n" << this->username << " , " << this->password;
+                qDebug() << "yay worked";
                 //Connected
             }
         }
         else
         {
-            std::cout << "user already exists" << std::endl;
+            qDebug() << "user already exists";
         }
 
     }  catch (...) {
-        std::cout << "Error occured while opening or writing file";
+        qDebug() << "Error occured while opening or writing file";
     }
-}
-
-// SLOTS
-void NewAccount::slotSubmit()
-{
-    //qDebug() << "slotSubmit() called";
 }
 
 void NewAccount::slotBack()

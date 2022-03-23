@@ -18,7 +18,6 @@ class Login : public QWidget
 public:
     Login(QWidget *parent = nullptr);
     void createUI();
-    void checkConnexion();
 
 private:
     QString username;

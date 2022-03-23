@@ -39,30 +39,6 @@ void Login::createUI()
     setLayout(vbox);
 }
 
-void Login::checkConnexion()
-{
-    QFile file("users.txt");
-
-    try {
-        file.open(QIODevice::ReadWrite | QIODevice::Text);
-
-        QTextStream in(&file);
-
-        while (!in.atEnd())
-        {
-             QString line = in.readLine();
-             QStringList newLine = line.split(" , ");
-             if(this->username == newLine.at(0))
-             {
-                 //Connected
-             }
-         }
-    }
-    catch (...) {
-        std::cout << "Error occured while opening or writing file";
-    }
-}
-
 // SLOTS
 void Login::slotNewAcc()
 {
@@ -77,5 +53,35 @@ void Login::slotReturnHandler()
     }
     else if (!this->lineUsername->text().isEmpty())
     {
+        QFile file("users.txt");
+        this->username = this->lineUsername->text();
+        this->password = this->linePassword->text();
+        bool isConnected = false;
+
+        try {
+            file.open(QIODevice::ReadWrite | QIODevice::Text);
+
+            QTextStream in(&file);
+
+            while (!in.atEnd())
+            {
+                QString line = in.readLine();
+                QStringList newLine = line.split(" , ");
+                if(this->username == newLine.at(0) && this->password == newLine.at(1))
+                {
+                    qDebug() << "yay worked";
+                    isConnected = true;
+                    //Connected
+                }
+            }
+
+            if (!isConnected)
+            {
+                qDebug() << "username or password is incorrect";
+            }
+        }
+        catch (...) {
+            qDebug() << "Error occured while opening or writing file";
+        }
     }
 }
