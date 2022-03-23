@@ -39,9 +39,28 @@ void Login::createUI()
     setLayout(vbox);
 }
 
-void Login::checkCred()
+void Login::checkConnexion()
 {
-    qDebug() << "checkCred() " + this->lineUsername->text() + " " + this->linePassword->text();
+    QFile file("users.txt");
+
+    try {
+        file.open(QIODevice::ReadWrite | QIODevice::Text);
+
+        QTextStream in(&file);
+
+        while (!in.atEnd())
+        {
+             QString line = in.readLine();
+             QStringList newLine = line.split(" , ");
+             if(this->username == newLine.at(0))
+             {
+                 //Connected
+             }
+         }
+    }
+    catch (...) {
+        std::cout << "Error occured while opening or writing file";
+    }
 }
 
 // SLOTS
@@ -58,7 +77,5 @@ void Login::slotReturnHandler()
     }
     else if (!this->lineUsername->text().isEmpty())
     {
-        qDebug() << "here;";
-        checkCred();
     }
 }

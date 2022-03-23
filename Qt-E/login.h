@@ -1,7 +1,10 @@
 #ifndef LOGIN_H
 #define LOGIN_H
 
+#include <iostream>
 #include <QWidget>
+#include <QFile>
+#include <QTextStream>
 
 class QLineEdit;
 class QLabel;
@@ -15,7 +18,7 @@ class Login : public QWidget
 public:
     Login(QWidget *parent = nullptr);
     void createUI();
-    void checkCred();
+    void checkConnexion();
 
 private:
     QString username;

@@ -13,7 +13,7 @@ class NewAccount : public QWidget
 public:
     NewAccount(QWidget *parent = nullptr);
     void createUI();
-    void checkCred();
+    void createAccount();
 
 private:
     QString username;
