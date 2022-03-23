@@ -29,8 +29,6 @@ private:
     QPushButton *btnLogin;
     QPushButton *btnNewAcc;
 
-    QMainWindow *parent;
-
     QVBoxLayout *vbox;
 
 public slots:

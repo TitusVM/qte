@@ -35,6 +35,8 @@ set(PROJECT_SOURCES
         login.cpp
         newaccount.h
         newaccount.cpp
+        newgame.cpp
+        newgame.h
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

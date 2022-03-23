@@ -3,6 +3,7 @@
 
 #include "login.h"
 #include "newaccount.h"
+#include "newgame.h"
 #include <QMainWindow>
 #include <QStack>
 
@@ -23,6 +24,7 @@ public slots:
 private:
     Login *loginWindow;
     NewAccount *newAccountWindow;
+    NewGame *newGameWindow;
 
     QStack<QWidget*> *widgetStack;
 };
