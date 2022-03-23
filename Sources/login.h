@@ -39,6 +39,7 @@ public slots:
 
 signals:
     void signalNewAcc();
+    void signalLoggedIn();
 
 };
 

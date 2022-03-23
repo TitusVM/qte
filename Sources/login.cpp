@@ -71,6 +71,7 @@ void Login::slotReturnHandler()
                 if(this->username == newLine.at(0) && this->password == newLine.at(1))
                 {
                     qDebug() << "yay worked";
+                    emit signalLoggedIn();
                     isConnected = true;
                     //Connected
                 }

@@ -3,6 +3,7 @@
 
 #include "login.h"
 #include "newaccount.h"
+#include "mainscreen.h"
 #include <QMainWindow>
 #include <QStack>
 
@@ -19,10 +20,12 @@ public:
 public slots:
     void slotNewAcc();
     void slotBackToLogin();
+    void slotLoggedIn();
 
 private:
     Login *loginWindow;
     NewAccount *newAccountWindow;
+    MainScreen *mainScreenWindow;
 
     QStack<QWidget*> *widgetStack;
 };
