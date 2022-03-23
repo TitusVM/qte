@@ -33,6 +33,11 @@ void Login::checkConnexion()
     }
 }
 
+void Login::newAccount()
+{
+    new NewAccount(this);
+}
+
 Login::~Login()
 {
 
