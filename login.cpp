@@ -34,13 +34,19 @@ void Login::checkConnexion()
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> d7ddc7e (bug fix in login)
 void Login::newAccount()
 {
     new NewAccount(this);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> 270c0c9 (Login's logic development)
+=======
+>>>>>>> d7ddc7e (bug fix in login)
 Login::~Login()
 {
 
