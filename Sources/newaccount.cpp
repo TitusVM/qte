@@ -1,6 +1,7 @@
 #include <QLineEdit>
 #include <QVBoxLayout>
 #include <QPushButton>
+#include <QDebug>
 
 #include "newaccount.h"
 #include "login.h"

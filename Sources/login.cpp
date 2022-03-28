@@ -3,6 +3,7 @@
 #include <QLineEdit>
 #include <QVBoxLayout>
 #include <QPushButton>
+#include <QDebug>
 
 Login::Login(QWidget *parent)
     : QWidget(parent)
