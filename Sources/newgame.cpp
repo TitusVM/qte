@@ -28,7 +28,6 @@ NewGame::NewGame(QWidget *parent) : QWidget(parent)
     connect(this->btnHard, &QPushButton::clicked, this, &NewGame::slotSelectDifficulty);
     connect(this->btnPlayCustom, &QPushButton::clicked, this, &NewGame::slotPlayCustom);
 
-
     createUI();
 }
 
@@ -39,13 +38,14 @@ void NewGame::createUI()
     this->grid->addWidget(this->btnEasy, 2, 1);
     this->grid->addWidget(this->btnNormal, 3, 1);
     this->grid->addWidget(this->btnHard, 4, 1);
-    this->grid->addWidget(this->lblCustomLevels, 5, 1);
-    this->grid->addWidget(this->cbxSelectCustomLevels, 6, 1);
-    this->grid->addWidget(this->btnPlayCustom, 7, 1);
+    this->grid->addWidget(this->lblCustomLevels, 6, 1);
+    this->grid->addWidget(this->cbxSelectCustomLevels, 7, 1);
+    this->grid->addWidget(this->btnPlayCustom, 8, 1);
 
     //Spaces
-    this->grid->addWidget(new QLabel(), 7, 2);
-    this->grid->addWidget(new QLabel(), 7, 0);
+    this->grid->addWidget(new QLabel(), 5, 1);
+    this->grid->addWidget(new QLabel(), 8, 2);
+    this->grid->addWidget(new QLabel(), 8, 0);
 
     setLayout(this->grid);
 }
