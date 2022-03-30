@@ -42,7 +42,7 @@ build-job:
     - cd BUILD
     - cmake -G "Ninja" ../Sources
     - ninja
-    - ./tests
+    #- ./tests
     - cmake --build . --target BuildDoc
 
 #test-job:
