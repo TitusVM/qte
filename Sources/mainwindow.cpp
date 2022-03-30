@@ -11,13 +11,16 @@ void MainWindow::createUI()
 {
     this->loginWindow = new Login(this);
     this->newAccountWindow = new NewAccount(this);
+    this->gameplayWindow = new Gameplay(this);
     this->widgetStack = new QStack<QWidget*>;
 
     connect(this->loginWindow, &Login::signalNewAcc, this, &MainWindow::slotNewAcc);
     connect(this->newAccountWindow, &NewAccount::signalBack, this, &MainWindow::slotBackToLogin);
 
     this->widgetStack->push(this->newAccountWindow);
-    setCentralWidget(this->loginWindow);
+    //setCentralWidget(this->loginWindow);
+
+    setCentralWidget(this->gameplayWindow);
 }
 
 MainWindow::~MainWindow()
