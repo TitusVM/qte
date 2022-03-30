@@ -19,8 +19,8 @@ before_script:
 stages:
   - info
   - build
-  - test
-  - deploy
+  #- test
+  #- deploy
 
 info-job:
   tags:
