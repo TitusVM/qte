@@ -42,19 +42,19 @@ build-job:
     - cd BUILD
     - cmake -G "Ninja" ../Sources
     - ninja
-    #- ./tests
+    - ./tests
     - cmake --build . --target BuildDoc
 
-#test-job:
-#  tags:
-#    - alpine-docker
-#  stage: test
-#  script:
-#    - echo "Running tests..."
+test-job:
+  tags:
+    - alpine-docker
+  stage: test
+  script:
+    - echo "Running tests..."
 
-#deploy-job:
-#  tags:
-#    - alpine-docker
-#  stage: deploy
-#  script:
-#    - echo "Deploying..."
+deploy-job:
+  tags:
+    - alpine-docker
+  stage: deploy
+  script:
+    - echo "Deploying..."
