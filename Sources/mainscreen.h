@@ -1,7 +1,6 @@
 #ifndef MAINSCREEN_H
 #define MAINSCREEN_H
 
-#include <QSvgWidget>
 #include <QWidget>
 #include <QPushButton>
 #include <QVBoxLayout>

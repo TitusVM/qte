@@ -41,6 +41,8 @@ set(PROJECT_SOURCES
         mainscreen.h
         mainscreen.cpp
         resources.qrc
+        newgame.cpp
+        newgame.h
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

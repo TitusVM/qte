@@ -3,6 +3,7 @@
 
 #include "login.h"
 #include "newaccount.h"
+#include "newgame.h
 #include "mainscreen.h"
 #include <QMainWindow>
 #include <QStack>
@@ -20,6 +21,7 @@ public:
 private:
     Login *loginWindow;
     NewAccount *newAccountWindow;
+    NewGame *newGameWindow;
     MainScreen *mainScreenWindow;
 
     QStack<QWidget*> *widgetStack;
