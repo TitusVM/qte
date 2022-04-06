@@ -1,6 +1,7 @@
 #ifndef MAINSCREEN_H
 #define MAINSCREEN_H
 
+#include <QSvgWidget>
 #include <QWidget>
 #include <QPushButton>
 #include <QVBoxLayout>
@@ -20,7 +21,7 @@ private:
     QString username;
 
     // UI
-    // QtELogo *qtELogo;
+    //QtELogo *qtELogo;
     QPushButton *btnNewGame;
     QPushButton *btnNewLevel;
     QPushButton *btnCredits;
@@ -36,6 +37,9 @@ public slots:
 
 signals:
     void signalQuit();
+	
+	
+	
 };
 
 #endif // MAINSCREEN_H
