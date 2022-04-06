@@ -27,6 +27,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets REQUIRED)
 
+find_package(QT NAMES Qt6 Qt5 COMPONENTS Svg REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Svg REQUIRED)
+
 set(PROJECT_SOURCES
         main.cpp
         mainwindow.cpp
@@ -37,6 +40,7 @@ set(PROJECT_SOURCES
         newaccount.cpp
         mainscreen.h
         mainscreen.cpp
+        resources.qrc
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
@@ -56,7 +60,7 @@ else()
     endif()
 endif()
 
-target_link_libraries(Qt-E PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+target_link_libraries(Qt-E PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Svg)
 
 set_target_properties(Qt-E PROPERTIES
     MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com

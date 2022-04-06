@@ -1,9 +1,11 @@
 #ifndef MAINSCREEN_H
 #define MAINSCREEN_H
 
+#include <QSvgWidget>
 #include <QWidget>
 #include <QPushButton>
 #include <QVBoxLayout>
+#include <QPixmap>
 
 class MainScreen : public QWidget
 {
@@ -27,12 +29,14 @@ private:
 
     QVBoxLayout *vbox;
 
-
 public slots:
     void slotNewGame();
     void slotNewLevel();
     void slotCredits();
     void slotQuit();
+
+signals:
+    void signalQuit();
 
 
 };

@@ -1,5 +1,6 @@
 #include "mainscreen.h"
 #include <QDebug>
+#include <QGraphicsView>
 
 MainScreen::MainScreen(QWidget *parent, QString username)
     : QWidget(parent)
@@ -68,6 +69,6 @@ void MainScreen::slotCredits()
 
 void MainScreen::slotQuit()
 {
-    qDebug() << "slotQuit called";
+    emit signalQuit();
 }
 

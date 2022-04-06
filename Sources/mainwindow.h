@@ -17,16 +17,18 @@ public:
 
     void createUI();
 
-public slots:
-    void slotNewAcc();
-    void slotBackToLogin();
-    void slotLoggedIn();
-
 private:
     Login *loginWindow;
     NewAccount *newAccountWindow;
     MainScreen *mainScreenWindow;
 
     QStack<QWidget*> *widgetStack;
+
+
+public slots:
+    void slotNewAcc();
+    void slotBackToLogin();
+    void slotLoggedIn();
+    void slotQuit();
 };
 #endif // MAINWINDOW_H
