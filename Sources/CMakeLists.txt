@@ -35,7 +35,6 @@ set(PROJECT_SOURCES
         login.cpp
         newaccount.h
         newaccount.cpp
-        tests.cpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
@@ -90,3 +89,22 @@ target_link_libraries(tests gtest_main)
 include(GoogleTest)
 gtest_discover_tests(tests)
 enable_testing()
+
+###############################################################################
+##########          TESTING
+###############################################################################
+find_package(Doxygen)
+
+if(NOT DOXYGEN_FOUND)
+message(FATAL_ERROR "Doxygen is needed to build the documentation.")
+endif()
+
+set(doxyfile ${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile)
+
+add_custom_target(BuildDoc ALL
+  COMMAND ${DOXYGEN_EXECUTABLE} ${doxyfile}
+  WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/..
+  COMMENT "Generating Doxygen documentation"
+  VERBATIM
+)
+
