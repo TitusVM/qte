@@ -48,9 +48,16 @@ void MainWindow::slotBackToLogin()
 void MainWindow::slotLoggedIn()
 {
     this->mainScreenWindow = new MainScreen(this, "TODO_USERNAME");
+
+    connect(this->mainScreenWindow, &MainScreen::signalQuit, this, &MainWindow::slotQuit);
+
     qDebug() << "slotLoggedIn called";
     this->widgetStack->push(this->loginWindow);
     takeCentralWidget();
     setCentralWidget(this->mainScreenWindow);
 }
 
+void MainWindow::slotQuit()
+{
+    close();
+}
