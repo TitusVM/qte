@@ -3,6 +3,11 @@
 #include <QGraphicsScene>
 #include <QGraphicsView>
 #include <QGridLayout>
+#include "target.h"
+#include "graphicsscene.h"
+#include <QRandomGenerator>
+#include <QKeyEvent>
+#include "qte.h"
 
 Gameplay::Gameplay(QWidget *parent) : QWidget(parent)
 {
@@ -19,29 +24,46 @@ Gameplay::Gameplay(QWidget *parent) : QWidget(parent)
     this->lblAccuracyTargetsPourcentage->setStyleSheet("font-weight: bold;");
 
     this->sceneQTEs = new QGraphicsScene(this);
-    this->sceneTargets = new QGraphicsScene(this);
+    this->sceneTargets = new GraphicsScene(this);
 
     QPen pen = QPen(Qt::red, 20);
     this->sceneQTEs->addEllipse(this->sceneQTEs->width()/2, this->sceneQTEs->height()/2, 250, 250, pen);
 
-    pen.setColor(Qt::black);
-    pen.setWidth(11);
-    this->sceneTargets->addEllipse(200, 200, 70, 70, pen);
-    pen.setColor(QColor(0, 114, 206));
-    pen.setWidth(11);
-    this->sceneTargets->addEllipse(210, 210, 50, 50, pen);
-    pen.setColor(Qt::red);
-    pen.setWidth(11);
-    this->sceneTargets->addEllipse(220, 220, 30, 30, pen);
-    pen.setColor(Qt::yellow);
-    pen.setWidth(11);
-    this->sceneTargets->addEllipse(230, 230, 10, 10, pen);
+    QTE *qte = new QTE();
+    this->sceneTargets->setKey(qte->qteKey);
+    QGraphicsTextItem *text = sceneQTEs->addText(qte->qteKey);
+
+    int width = 1200 * 5/7 - 10;
+    int height = 600 * 4/5;
+
+    text->setPos((1200-width)/2 - 120, (600 - height)/2 - 50);
+    text->setFont(QFont("SansSerif", 150, 75));
+
+    int x = randomCoord(width)-50;
+    int y = randomCoord(height)-50;
+
+    this->sceneTargets->setX(x);
+    this->sceneTargets->setY(y);
+    Target *target1 = new Target(x, y, this->sceneTargets);
+    target1->draw();
 
     this->viewQTEs = new QGraphicsView(this->sceneQTEs, this);
     this->viewTargets = new QGraphicsView(this->sceneTargets, this);
+    viewTargets->setFixedSize(width, height);
+    viewTargets->setSceneRect(0, 0, width, height);
+    viewTargets->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    viewTargets->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
     createUI();
     setMinimumSize(QSize(1200, 600));
+
+    viewTargets->setFocus();
+}
+
+
+int Gameplay::randomCoord(int max)
+{
+    return QRandomGenerator::global()->bounded(5, max);
 }
 
 void Gameplay::createUI()

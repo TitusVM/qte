@@ -7,6 +7,7 @@ class QLabel;
 class QGridLayout;
 class QGraphicsScene;
 class QGraphicsView;
+class GraphicsScene;
 
 class Gameplay : public QWidget
 {
@@ -14,6 +15,7 @@ class Gameplay : public QWidget
 public:
     Gameplay(QWidget *parent = nullptr);
     void createUI();
+    int randomCoord(int max);
 
 private:
     QLabel *lblDifficulty;
@@ -25,7 +27,7 @@ private:
     QLabel *lblAccuracyTargetsPourcentage;
 
     QGraphicsScene *sceneQTEs;
-    QGraphicsScene *sceneTargets;
+    GraphicsScene *sceneTargets;
 
     QGraphicsView *viewQTEs;
     QGraphicsView *viewTargets;

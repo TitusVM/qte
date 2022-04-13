@@ -37,6 +37,12 @@ set(PROJECT_SOURCES
         newaccount.cpp
         gameplay.h
         gameplay.cpp
+        target.h
+        target.cpp
+        graphicsscene.cpp
+        graphicsscene.h
+        qte.h
+        qte.cpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
