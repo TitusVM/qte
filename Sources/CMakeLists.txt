@@ -43,6 +43,8 @@ set(PROJECT_SOURCES
         graphicsscene.h
         qte.h
         qte.cpp
+        level.h
+        level.cpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
