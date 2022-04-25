@@ -5,6 +5,7 @@
 #include "newaccount.h"
 #include "newgame.h"
 #include "mainscreen.h"
+#include "gameplay.h"
 #include <QMainWindow>
 #include <QStack>
 
@@ -23,6 +24,7 @@ private:
     NewAccount *newAccountWindow;
     NewGame *newGameWindow;
     MainScreen *mainScreenWindow;
+    Gameplay *gameplayWindow;
 
     QStack<QWidget*> *widgetStack;
 
