@@ -6,6 +6,8 @@
 #include "newgame.h"
 #include "mainscreen.h"
 #include "gameplay.h"
+#include "leveleditor.h"
+
 #include <QMainWindow>
 #include <QStack>
 
@@ -25,6 +27,7 @@ private:
     NewGame *newGameWindow;
     MainScreen *mainScreenWindow;
     Gameplay *gameplayWindow;
+    LevelEditor *levelEditorWindow;
 
     QStack<QWidget*> *widgetStack;
 

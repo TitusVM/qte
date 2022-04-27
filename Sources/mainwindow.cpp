@@ -9,18 +9,23 @@ MainWindow::MainWindow(QWidget *parent)
 
 void MainWindow::createUI()
 {
-    this->loginWindow = new Login(this);
-    this->newAccountWindow = new NewAccount(this);
-    this->newGameWindow = new NewGame(this);
-    this->gameplayWindow = new Gameplay(this);
+    this->loginWindow = new Login();
+    this->newAccountWindow = new NewAccount();
+    this->newGameWindow = new NewGame();
+    this->gameplayWindow = new Gameplay();
+    this->levelEditorWindow = new LevelEditor();
+
     this->widgetStack = new QStack<QWidget*>;
 
     connect(this->loginWindow, &Login::signalNewAcc, this, &MainWindow::slotNewAcc);
     connect(this->newAccountWindow, &NewAccount::signalBack, this, &MainWindow::slotBackToLogin);
     connect(this->loginWindow, &Login::signalLoggedIn, this, &MainWindow::slotLoggedIn);
 
+    this->widgetStack->push(this->loginWindow);
     this->widgetStack->push(this->newAccountWindow);
-    setCentralWidget(this->loginWindow);
+    this->widgetStack->push(this->newGameWindow);
+    this->widgetStack->push(this->gameplayWindow);
+    setCentralWidget(this->levelEditorWindow);
 }
 
 MainWindow::~MainWindow()

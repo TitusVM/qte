@@ -55,9 +55,9 @@ Gameplay::Gameplay(QWidget *parent) : QWidget(parent)
     viewTargets->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
     createUI();
-    setMinimumSize(QSize(1200, 600));
+    //setMinimumSize(QSize(1200, 600));
 
-    viewTargets->setFocus();
+    //viewTargets->setFocus();
 }
 
 
@@ -79,8 +79,6 @@ void Gameplay::createUI()
     this->grid->addWidget(this->lblAccuracyTargetsPourcentage, 5, 6);
 
     setLayout(this->grid);
-
-
 }
 
 void Gameplay::slotSelectDifficulty()
