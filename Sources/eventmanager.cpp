@@ -12,7 +12,7 @@ EventManager::EventManager(Level *level) : QWidget(nullptr)
 
 void EventManager::createUI()
 {
-    QString stringList[5] = {"one", "two", "three", "four", "five"};
+    QString stringList[3] = {"one", "two", "three"};
     QStandardItemModel *model = new QStandardItemModel();
     QStandardItem *item;
     for (size_t i=0; i < stringList->size(); i++)

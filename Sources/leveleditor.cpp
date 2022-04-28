@@ -1,20 +1,32 @@
 #include "leveleditor.h"
 
+/**
+ * @brief LevelEditor::LevelEditor
+ * @param parent
+ *
+ * Public Constructor, initializing attributes and connecting signals to slots
+ */
 LevelEditor::LevelEditor(QWidget *parent) : QWidget(parent)
 {
-    this->btnAddTarget = new QPushButton(tr("Add Target"));
-    this->btnAddMovTarget = new QPushButton(tr("Add Moving Target"));
+    //this->btnAddMovTarget = new QPushButton(tr("Add Moving Target"));
    // this->btnAddGrowTarget = new QPushButton(tr("Add Growing Target"));
+
+    this->btnAddTarget = new QPushButton(tr("Add Target"));
+    this->linTimeTarget = new QLineEdit(this->secondsToString(300));
+    this->linTimeTarget->setInputMask("00:00");
+
     this->btnDeleteEvent = new QPushButton(tr("Delete"));
     this->btnDeleteEvent->setDisabled(true);
-    this->linTimeEvent = new QLineEdit(tr("1:23"));
-    this->linTimeEvent->setDisabled(true);
+    this->linSelectedEvent = new QLineEdit(this->secondsToString(0));
+    this->linSelectedEvent->setInputMask("00:00");
+    this->linSelectedEvent->setDisabled(true);
+
     this->btnAddQte = new QPushButton(tr("Add QTE"));
+    this->linTimeQte = new QLineEdit(this->secondsToString(197));
+    this->linTimeQte->setInputMask("00:00");
+
     this->btnManage = new QPushButton(tr("Manage Events"));
     this->btnCreate = new QPushButton(tr("Save Level"));
-
-    this->lblTime = new QLabel(tr("Time in seconds (0 to 300):"));
-    this->linTime = new QLabel(tr("197"));
 
     // TODO
     this->level = new Level();
@@ -24,9 +36,17 @@ LevelEditor::LevelEditor(QWidget *parent) : QWidget(parent)
 
     this->mainLayout = new QGridLayout();
 
+    connect(this->btnAddTarget, &QPushButton::clicked, this, &LevelEditor::slotAddTarget);
+    connect(this->btnAddQte, &QPushButton::clicked, this, &LevelEditor::slotAddQte);
+
     createUI();
 }
 
+/**
+ * @brief LevelEditor::createUI
+ *
+ * Function to add elements to layout and set layout. Creating interface.
+ */
 void LevelEditor::createUI()
 {
     QString alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -36,15 +56,59 @@ void LevelEditor::createUI()
         this->comboChar->addItem(character);
     }
 
-    this->mainLayout->addWidget(this->lblTime, 0,0,1,1);
-    this->mainLayout->addWidget(this->linTime, 0,1,1,1);
-    this->mainLayout->addWidget(this->eventManager, 1,0,3,3);
-    this->mainLayout->addWidget(this->btnAddTarget, 1,3,1,2);
-    this->mainLayout->addWidget(this->linTimeEvent, 2,3,1,1);
-    this->mainLayout->addWidget(this->btnDeleteEvent, 2,4,1,1);
-    this->mainLayout->addWidget(this->comboChar, 3,3,1,1);
-    this->mainLayout->addWidget(this->btnAddQte, 3,4,1,1);
+    this->mainLayout->addWidget(this->eventManager, 0,0,3,3);
+    this->mainLayout->addWidget(this->linTimeTarget, 0,3,1,1);
+    this->mainLayout->addWidget(this->btnAddTarget, 0,4,1,2);
+    this->mainLayout->addWidget(this->linSelectedEvent, 1,3,1,1);
+    this->mainLayout->addWidget(this->btnDeleteEvent, 1,4,1,2);
+    this->mainLayout->addWidget(this->comboChar, 2,3,1,1);
+    this->mainLayout->addWidget(this->linTimeQte, 2,4,1,1);
+    this->mainLayout->addWidget(this->btnAddQte, 2,5,1,1);
 
     setLayout(this->mainLayout);
+}
 
+// TOOLS
+QString LevelEditor::secondsToString(int nbSeconds)
+{
+    int seconds = nbSeconds % 60;
+    int minutes = (nbSeconds / 60) % 60;
+
+    QString timeString = QString("%1:%2")
+      .arg(minutes, 2, 10, QChar('0'))
+      .arg(seconds, 2, 10, QChar('0'));
+    return timeString;
+}
+
+int LevelEditor::stringToSeconds(QString timeString)
+{
+    auto split = timeString.split(":");
+    int seconds = split[0].toInt() * 60 + split[1].toInt();
+    return seconds;
+}
+
+// SLOTS
+
+/**
+ * @brief LevelEditor::slotAddTarget
+ *
+ * Slot to add a Target at selected time to Level
+ */
+void LevelEditor::slotAddTarget()
+{
+    int addAt = this->stringToSeconds(this->linTimeTarget->text());
+    qDebug() << "add Target at " << addAt;
+}
+
+/**
+ * @brief LevelEditor::slotAddTarget
+ *
+ * Slot to add a QTE at selected time to Level
+ */
+void LevelEditor::slotAddQte()
+{
+    int addAt = this->stringToSeconds(this->linTimeQte->text());
+    QChar* addLetter = this->comboChar->currentText().data();
+    int addLetterAsAscii = (int)(char)addLetter->toLatin1();
+    qDebug() << "add " << addLetterAsAscii << " Qte at " << addAt;
 }
