@@ -56,6 +56,11 @@ set(PROJECT_SOURCES
         leveleditor.h
         eventmanager.h
         eventmanager.cpp
+        commandmanager.h
+        commandmanager.cpp
+        action_i.h
+        addtarget.h
+        addtarget.cpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
