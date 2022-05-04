@@ -10,6 +10,9 @@
 
 #include "level.h"
 #include "eventmanager.h"
+#include "commandmanager.h"
+#include "addtarget.h"
+#include "addqte.h"
 
 
 /**
@@ -25,6 +28,10 @@ public:
     LevelEditor(QWidget *parent = nullptr);
 
 private:
+
+    QPushButton *btnUndo;
+    QPushButton *btnRedo;
+
     QPushButton *btnAddTarget;
     QLineEdit *linTimeTarget;
     //QPushButton *btnAddMovTarget;
@@ -57,11 +64,15 @@ private:
     void createUI();
     QString secondsToString(int nbSeconds);
     int stringToSeconds(QString timeString);
+    CommandManager *commandManager;
+
 
 // Slots
 private slots:
     void slotAddTarget();
     void slotAddQte();
+    void slotUndo();
+    void slotRedo();
 
 };
 

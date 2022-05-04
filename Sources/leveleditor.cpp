@@ -11,6 +11,14 @@ LevelEditor::LevelEditor(QWidget *parent) : QWidget(parent)
     //this->btnAddMovTarget = new QPushButton(tr("Add Moving Target"));
    // this->btnAddGrowTarget = new QPushButton(tr("Add Growing Target"));
 
+
+    this->commandManager = new CommandManager();
+    this->btnUndo = new QPushButton(tr("Undo"));
+    this->btnRedo = new QPushButton(tr("Redo"));
+
+    connect(this->btnUndo, &QPushButton::clicked, this, &LevelEditor::slotUndo);
+    connect(this->btnRedo, &QPushButton::clicked, this, &LevelEditor::slotRedo);
+
     this->btnAddTarget = new QPushButton(tr("Add Target"));
     this->linTimeTarget = new QLineEdit(this->secondsToString(300));
     this->linTimeTarget->setInputMask("00:00");
@@ -64,6 +72,8 @@ void LevelEditor::createUI()
     this->mainLayout->addWidget(this->comboChar, 2,3,1,1);
     this->mainLayout->addWidget(this->linTimeQte, 2,4,1,1);
     this->mainLayout->addWidget(this->btnAddQte, 2,5,1,1);
+    this->mainLayout->addWidget(this->btnUndo, 3,0,1,1);
+    this->mainLayout->addWidget(this->btnRedo, 3,1,1,1);
 
     setLayout(this->mainLayout);
 }
@@ -98,6 +108,8 @@ void LevelEditor::slotAddTarget()
 {
     int addAt = this->stringToSeconds(this->linTimeTarget->text());
     qDebug() << "add Target at " << addAt;
+    AddTarget *addTarget = new AddTarget(addAt);
+    commandManager->execute(addTarget);
 }
 
 /**
@@ -111,4 +123,16 @@ void LevelEditor::slotAddQte()
     QChar* addLetter = this->comboChar->currentText().data();
     int addLetterAsAscii = (int)(char)addLetter->toLatin1();
     qDebug() << "add " << addLetterAsAscii << " Qte at " << addAt;
+    AddQte *addQte = new AddQte(addAt, addLetter);
+    commandManager->execute(addQte);
+}
+
+void LevelEditor::slotUndo()
+{
+    this->commandManager->undo();
+}
+
+void LevelEditor::slotRedo()
+{
+    this->commandManager->redo();
 }

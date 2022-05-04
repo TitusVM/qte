@@ -61,6 +61,8 @@ set(PROJECT_SOURCES
         action_i.h
         addtarget.h
         addtarget.cpp
+        addqte.h
+        addqte.cpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

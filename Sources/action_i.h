@@ -4,8 +4,10 @@
 class Action_I
 {
 public:
-    virtual void undo();
-    virtual void redo();
+    virtual ~Action_I() = default;
+    virtual void execute() = 0;
+    virtual void undo() = 0;
+    virtual void redo() = 0;
 
 private:
     int timeSeconds;
