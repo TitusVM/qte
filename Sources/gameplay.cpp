@@ -8,12 +8,15 @@
 #include <QRandomGenerator>
 #include <QKeyEvent>
 #include "qte.h"
+#include "level.h"
+#include <QTimer>
+#include <QMessageBox>
 
 Gameplay::Gameplay(QWidget *parent) : QWidget(parent)
 {
     this->grid = new QGridLayout();
 
-    this->lblDifficulty = new QLabel(tr("Difficulty : "));
+    this->lblLevelName = new QLabel(tr("Difficulty : "));
     this->lblNumberQTEs = new QLabel(tr("Number of QTEs : "));
     this->lblAccuracyQTEs= new QLabel(tr("Accuracy : "));
     this->lblAccuracyQTEsPourcentage = new QLabel(tr("%"));
@@ -26,33 +29,21 @@ Gameplay::Gameplay(QWidget *parent) : QWidget(parent)
     this->sceneQTEs = new QGraphicsScene(this);
     this->sceneTargets = new GraphicsScene(this);
 
-    QPen pen = QPen(Qt::red, 20);
-    this->sceneQTEs->addEllipse(this->sceneQTEs->width()/2, this->sceneQTEs->height()/2, 250, 250, pen);
-
-    QTE *qte = new QTE();
-    this->sceneTargets->setKey(qte->qteKey);
-    QGraphicsTextItem *text = sceneQTEs->addText(qte->qteKey);
-
-    int width = 1200 * 5/7 - 10;
-    int height = 600 * 4/5;
-
-    text->setPos((1200-width)/2 - 120, (600 - height)/2 - 50);
-    text->setFont(QFont("SansSerif", 150, 75));
-
-    int x = randomCoord(width)-50;
-    int y = randomCoord(height)-50;
-
-    this->sceneTargets->setX(x);
-    this->sceneTargets->setY(y);
-    Target *target1 = new Target(x, y, this->sceneTargets);
-    target1->draw();
+    this->widthWindow = 1200 * 5/7 - 10;
+    this->heightWindow = 600 * 4/5;
 
     this->viewQTEs = new QGraphicsView(this->sceneQTEs, this);
     this->viewTargets = new QGraphicsView(this->sceneTargets, this);
-    viewTargets->setFixedSize(width, height);
-    viewTargets->setSceneRect(0, 0, width, height);
+    viewTargets->setFixedSize(widthWindow, heightWindow);
+    viewTargets->setSceneRect(0, 0, widthWindow, heightWindow);
     viewTargets->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     viewTargets->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
+    score = 0;
+    qteTotal = 0;
+    qteHit = 0;
+    targetTotal = 0;
+    targetHit = 0;
 
     createUI();
     setMinimumSize(QSize(1200, 600));
@@ -63,14 +54,14 @@ Gameplay::Gameplay(QWidget *parent) : QWidget(parent)
 
 int Gameplay::randomCoord(int max)
 {
-    return QRandomGenerator::global()->bounded(5, max);
+    return QRandomGenerator::global()->bounded(6, max-76);
 }
 
 void Gameplay::createUI()
 {
     this->grid->addWidget(this->viewQTEs, 0, 0, 4, 2);
     this->grid->addWidget(this->viewTargets, 0, 2, 4, 5);
-    this->grid->addWidget(this->lblDifficulty, 4, 0, 1, 2);
+    this->grid->addWidget(this->lblLevelName, 4, 0, 1, 2);
     this->grid->addWidget(this->lblNumberQTEs, 4, 2);
     this->grid->addWidget(this->lblAccuracyQTEs, 5, 2);
     this->grid->addWidget(this->lblAccuracyQTEsPourcentage, 5, 3);
@@ -91,4 +82,109 @@ void Gameplay::slotSelectDifficulty()
 void Gameplay::slotPlayCustom()
 {
     // un autre truc
+}
+
+void Gameplay::Play(QString levelName)
+{
+    level = new Level(levelName);
+    level->importLevel();
+
+    this->lblLevelName->setText("Level name : " + levelName);
+
+    this->seconds = 0;
+
+    this->timer = new QTimer(this);
+    connect(timer, SIGNAL(timeout()), this, SLOT(slotUpdate()));
+    timer->start(1000);
+}
+
+void Gameplay::slotUpdate()
+{
+    if (!this->sceneTargets->target)
+    {
+        clearTargets();
+    }
+    if (!this->sceneTargets->qte)
+    {
+        clearQtes();
+    }
+
+    if(level->targetsSeconds.contains(this->seconds))
+    {
+        if (this->sceneTargets->target)
+        {
+            score -= 100;
+        }
+        clearTargets();
+
+        int x = randomCoord(widthWindow);
+        int y = randomCoord(heightWindow);
+
+        targetTotal++;
+
+        this->sceneTargets->setX(x);
+        this->sceneTargets->setY(y);
+        Target *target1 = new Target(x, y, this->sceneTargets);
+        target1->draw();
+
+        this->viewTargets->repaint();
+        this->sceneTargets->target = true;
+    }
+    if(level->qtesSeconds.contains(this->seconds))
+    {
+        if (this->sceneTargets->qte)
+        {
+            score -= 50;
+        }
+        clearQtes();
+
+        QTE *qte = new QTE();
+
+        QPen pen = QPen(Qt::red, 20);
+        this->sceneQTEs->addEllipse((1200 - widthWindow)/2 - 200, (600 - heightWindow)/2 - 40, 300, 300, pen);
+
+        this->sceneTargets->setKey(qte->qteKey);
+        QGraphicsTextItem *text = sceneQTEs->addText(qte->qteKey);
+
+        text->setPos((1200 - widthWindow)/2 - 130, (600 - heightWindow)/2 - 10);
+        text->setFont(QFont("SansSerif", 150, 75));
+
+        qteTotal ++;
+
+        this->viewQTEs->repaint();
+        this->sceneTargets->qte = true;
+    }
+    this->seconds++;
+    if (this->seconds > this->level->totalSeconds)
+    {
+        this->timer->stop();
+        QMessageBox msgBox;
+        msgBox.setText("GG ! Score : " + QString::number(score));
+        msgBox.exec();
+    }
+
+    if (qteTotal != 0)
+    {
+        double qteAccuracy = ((double)qteHit/(double)qteTotal)*100;
+        this->lblNumberQTEs->setText("Number of QTEs : " + QString::number(qteTotal));
+        this->lblAccuracyQTEs->setText("Accuracy : " + QString::number(qteHit) + "/" + QString::number(qteTotal));
+        this->lblAccuracyQTEsPourcentage->setText(QString::number(qteAccuracy) + "%");
+    }
+    if(targetTotal != 0)
+    {
+        double targetAccuracy = ((double)targetHit/(double)targetTotal)*100;
+        this->lblNumberTargets->setText("Number of targets : " + QString::number(targetTotal));
+        this->lblAccuracyTargets->setText("Accuracy : " + QString::number(targetHit) + "/" + QString::number(targetTotal));
+        this->lblAccuracyTargetsPourcentage->setText(QString::number(targetAccuracy) + "%");
+    }
+}
+
+void Gameplay::clearTargets()
+{
+    this->sceneTargets->clear();
+}
+
+void Gameplay::clearQtes()
+{
+    this->sceneQTEs->clear();
 }

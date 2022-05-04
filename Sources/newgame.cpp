@@ -3,6 +3,7 @@
 #include <QPushButton>
 #include <QComboBox>
 #include <QGridLayout>
+#include "level.h"
 
 NewGame::NewGame(QWidget *parent) : QWidget(parent)
 {
@@ -52,7 +53,9 @@ void NewGame::createUI()
 
 void NewGame::slotSelectDifficulty()
 {
-    // truc
+    //temporary easy level play test
+    QString levelName ="easy.txt";
+    emit signalLevelPlay(levelName);
 }
 
 void NewGame::slotPlayCustom()

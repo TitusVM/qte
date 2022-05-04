@@ -9,18 +9,21 @@ MainWindow::MainWindow(QWidget *parent)
 
 void MainWindow::createUI()
 {
-    this->loginWindow = new Login(this);
-    this->newAccountWindow = new NewAccount(this);
-    this->newGameWindow = new NewGame(this);
-    this->gameplayWindow = new Gameplay(this);
+    this->loginWindow = new Login();
+    this->newAccountWindow = new NewAccount();
+    this->newGameWindow = new NewGame();
+    this->gameplayWindow = new Gameplay();
     this->widgetStack = new QStack<QWidget*>;
 
     connect(this->loginWindow, &Login::signalNewAcc, this, &MainWindow::slotNewAcc);
     connect(this->newAccountWindow, &NewAccount::signalBack, this, &MainWindow::slotBackToLogin);
     connect(this->loginWindow, &Login::signalLoggedIn, this, &MainWindow::slotLoggedIn);
+    connect(this->newGameWindow, &NewGame::signalLevelPlay, this, &MainWindow::slotPlay);
+    connect(this->gameplayWindow, &Gameplay::signalGameOver, this, &MainWindow::slotGameOver);
 
     this->widgetStack->push(this->newAccountWindow);
-    setCentralWidget(this->loginWindow);
+    //setCentralWidget(this->loginWindow);
+    setCentralWidget(this->newGameWindow);
 }
 
 MainWindow::~MainWindow()
@@ -62,4 +65,20 @@ void MainWindow::slotLoggedIn()
 void MainWindow::slotQuit()
 {
     close();
+}
+
+void MainWindow::slotPlay(QString levelName)
+{
+    this->gameplayWindow->Play(levelName);
+
+    this->widgetStack->push(this->newGameWindow);
+    takeCentralWidget();
+    setCentralWidget(this->gameplayWindow);
+}
+
+void MainWindow::slotGameOver()
+{
+    this->widgetStack->push(this->gameplayWindow);
+    takeCentralWidget();
+    setCentralWidget(this->newGameWindow);
 }

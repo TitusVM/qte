@@ -32,6 +32,9 @@ private:
 private slots:
     void slotSelectDifficulty();
     void slotPlayCustom();
+
+signals:
+    void signalLevelPlay(QString levelName);
 };
 
 #endif // NEWGAME_H

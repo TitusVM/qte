@@ -11,6 +11,8 @@ public:
     void setX(int value);
     void setY(int value);
     void setKey(QChar key);
+    bool target;
+    bool qte;
 
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
@@ -19,6 +21,7 @@ protected:
 private:
     int x;
     int y;
+    Gameplay *parent;
     QChar key;
 };
 

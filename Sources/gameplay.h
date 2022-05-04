@@ -8,6 +8,7 @@ class QGridLayout;
 class QGraphicsScene;
 class QGraphicsView;
 class GraphicsScene;
+class Level;
 
 class Gameplay : public QWidget
 {
@@ -16,9 +17,16 @@ public:
     Gameplay(QWidget *parent = nullptr);
     void createUI();
     int randomCoord(int max);
+    void Play(QString levelName);
+    void clearTargets();
+    void clearQtes();
+
+    int targetHit;
+    int qteHit;
+    int score;
 
 private:
-    QLabel *lblDifficulty;
+    QLabel *lblLevelName;
     QLabel *lblNumberQTEs;
     QLabel *lblAccuracyQTEs;
     QLabel *lblAccuracyQTEsPourcentage;
@@ -34,9 +42,22 @@ private:
 
     QGridLayout *grid;
 
+    QTimer *timer;
+    Level *level;
+
+    int seconds;
+    int widthWindow;
+    int heightWindow;
+    int qteTotal;
+    int targetTotal;
+
 private slots:
     void slotSelectDifficulty();
     void slotPlayCustom();
+    void slotUpdate();
+
+signals:
+    void signalGameOver();
 };
 
 #endif // Gameplay_H

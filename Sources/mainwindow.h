@@ -34,5 +34,7 @@ public slots:
     void slotBackToLogin();
     void slotLoggedIn();
     void slotQuit();
+    void slotPlay(QString levelName);
+    void slotGameOver();
 };
 #endif // MAINWINDOW_H

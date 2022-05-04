@@ -7,7 +7,9 @@
 
 GraphicsScene::GraphicsScene(Gameplay *parent) : QGraphicsScene(parent)
 {
-
+    target = false;
+    qte = false;
+    this->parent = parent;
 }
 
 void GraphicsScene::setX(int value)
@@ -37,7 +39,9 @@ void GraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent *event)
             Target *target = (Target *) item;
 
             int score = target->clicked(this->x, this->y, event->scenePos().x(), event->scenePos().y());
-            qDebug() << score;
+            this->target = false;
+            this->parent->score += score;
+            this->parent->targetHit++;
         }
     }
 }
@@ -48,7 +52,9 @@ void GraphicsScene::keyPressEvent(QKeyEvent *event)
     {
         if (this->key == (QChar)event->key())
         {
-            qDebug() << "YAY KEY WORKED";
+            this->qte = false;
+            this->parent->score += 50;
+            this->parent->qteHit++;
         }
     }
     catch (...)

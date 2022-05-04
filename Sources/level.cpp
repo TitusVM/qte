@@ -1,14 +1,16 @@
 #include "level.h"
 #include <QFile>
 
-Level::Level()
+Level::Level(QString filePath)
 {
-
+    this->filePath = filePath;
+    this->totalSeconds = 0;
 }
 
 void Level::importLevel()
 {
-    QFile file("Levels/easy.txt");
+    QString levelPath = "../Sources/Levels/" + this->filePath;
+    QFile file(levelPath);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
         return;
@@ -23,10 +25,11 @@ void Level::importLevel()
 
        line = file.readLine();
     }
-    if (line == "Qt-eMitus")
+    if (line == "Qt-eMitus\n")
     {
         line = file.readLine();
         this->totalSeconds = line.toInt();
+        qDebug() << line.toInt();
         while (!file.atEnd())
         {
             line = file.readLine();
@@ -34,12 +37,22 @@ void Level::importLevel()
 
             if (events.at(0) == "Target")
             {
-                //this->addTarget(events.at(1).toInt(), false, false);
+                this->addTarget(events.at(1).toInt());
             }
             else if (events.at(0) == "QTE")
             {
-                //this->addQTE(events.at(1).toInt());
+                this->addQTE(events.at(1).toInt());
             }
         }
     }
+}
+
+void Level::addTarget(int timeSeconds)
+{
+    this->targetsSeconds.append(timeSeconds);
+}
+
+void Level::addQTE(int timeSeconds)
+{
+    this->qtesSeconds.append(timeSeconds);
 }
