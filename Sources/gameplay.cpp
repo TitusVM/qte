@@ -17,6 +17,7 @@ Gameplay::Gameplay(QWidget *parent) : QWidget(parent)
     this->grid = new QGridLayout();
 
     this->lblLevelName = new QLabel(tr("Difficulty : "));
+    this->lblSecondsLeft = new QLabel(tr("Seconds left : "));
     this->lblNumberQTEs = new QLabel(tr("Number of QTEs : "));
     this->lblAccuracyQTEs= new QLabel(tr("Accuracy : "));
     this->lblAccuracyQTEsPourcentage = new QLabel(tr("%"));
@@ -62,6 +63,7 @@ void Gameplay::createUI()
     this->grid->addWidget(this->viewQTEs, 0, 0, 4, 2);
     this->grid->addWidget(this->viewTargets, 0, 2, 4, 5);
     this->grid->addWidget(this->lblLevelName, 4, 0, 1, 2);
+    this->grid->addWidget(this->lblSecondsLeft, 5, 0, 1, 2);
     this->grid->addWidget(this->lblNumberQTEs, 4, 2);
     this->grid->addWidget(this->lblAccuracyQTEs, 5, 2);
     this->grid->addWidget(this->lblAccuracyQTEsPourcentage, 5, 3);
@@ -89,7 +91,8 @@ void Gameplay::Play(QString levelName)
     level = new Level(levelName);
     level->importLevel();
 
-    this->lblLevelName->setText("Level name : " + levelName);
+    this->lblLevelName->setText("Level name : " + levelName.split(".").at(0));
+    this->lblSecondsLeft->setText("Seconds left : " + QString::number(this->level->totalSeconds));
 
     this->seconds = 0;
 
@@ -159,7 +162,7 @@ void Gameplay::slotUpdate()
     {
         this->timer->stop();
         QMessageBox msgBox;
-        msgBox.setText("GG ! Score : " + QString::number(score));
+        msgBox.setText("GG ! Score : " + QString::number(score) + " (Max : " + QString::number(qteTotal*50 + targetTotal*100) + ")");
         msgBox.exec();
     }
 
@@ -177,6 +180,9 @@ void Gameplay::slotUpdate()
         this->lblAccuracyTargets->setText("Accuracy : " + QString::number(targetHit) + "/" + QString::number(targetTotal));
         this->lblAccuracyTargetsPourcentage->setText(QString::number(targetAccuracy) + "%");
     }
+
+
+    this->lblSecondsLeft->setText("Seconds left : " + QString::number(this->level->totalSeconds - seconds));
 }
 
 void Gameplay::clearTargets()

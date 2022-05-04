@@ -24,9 +24,9 @@ NewGame::NewGame(QWidget *parent) : QWidget(parent)
 
     this->btnPlayCustom = new QPushButton(tr("Play Level"));
 
-    connect(this->btnEasy, &QPushButton::clicked, this, &NewGame::slotSelectDifficulty);
-    connect(this->btnNormal, &QPushButton::clicked, this, &NewGame::slotSelectDifficulty);
-    connect(this->btnHard, &QPushButton::clicked, this, &NewGame::slotSelectDifficulty);
+    connect(this->btnEasy, &QPushButton::clicked, this, &NewGame::slotSelectEasy);
+    connect(this->btnNormal, &QPushButton::clicked, this, &NewGame::slotSelectNormal);
+    connect(this->btnHard, &QPushButton::clicked, this, &NewGame::slotSelectHard);
     connect(this->btnPlayCustom, &QPushButton::clicked, this, &NewGame::slotPlayCustom);
 
     createUI();
@@ -51,10 +51,21 @@ void NewGame::createUI()
     setLayout(this->grid);
 }
 
-void NewGame::slotSelectDifficulty()
+void NewGame::slotSelectEasy()
 {
-    //temporary easy level play test
-    QString levelName ="easy.txt";
+    QString levelName ="Easy.csv";
+    emit signalLevelPlay(levelName);
+}
+
+void NewGame::slotSelectNormal()
+{
+    QString levelName ="Normal.csv";
+    emit signalLevelPlay(levelName);
+}
+
+void NewGame::slotSelectHard()
+{
+    QString levelName ="Hard.csv";
     emit signalLevelPlay(levelName);
 }
 

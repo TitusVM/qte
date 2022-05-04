@@ -25,21 +25,21 @@ void Level::importLevel()
 
        line = file.readLine();
     }
-    if (line == "Qt-eMitus\n")
+    if (line.split(";").at(0) == "Qt-eMitus")
     {
         line = file.readLine();
-        this->totalSeconds = line.toInt();
+        this->totalSeconds = line.split(";").at(0).toInt();
         qDebug() << line.toInt();
         while (!file.atEnd())
         {
             line = file.readLine();
             events = line.split(';');
 
-            if (events.at(0) == "Target")
+            if (events.at(0) == "target")
             {
                 this->addTarget(events.at(1).toInt());
             }
-            else if (events.at(0) == "QTE")
+            else if (events.at(0) == "qte")
             {
                 this->addQTE(events.at(1).toInt());
             }

@@ -30,7 +30,9 @@ private:
     QGridLayout *grid;
 
 private slots:
-    void slotSelectDifficulty();
+    void slotSelectEasy();
+    void slotSelectNormal();
+    void slotSelectHard();
     void slotPlayCustom();
 
 signals:

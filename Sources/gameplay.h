@@ -27,6 +27,7 @@ public:
 
 private:
     QLabel *lblLevelName;
+    QLabel *lblSecondsLeft;
     QLabel *lblNumberQTEs;
     QLabel *lblAccuracyQTEs;
     QLabel *lblAccuracyQTEsPourcentage;
