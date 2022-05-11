@@ -47,6 +47,30 @@ void Level::importLevel()
     }
 }
 
+
+void Level::exportLevel()
+{
+    QFile file(levelName); // TODO dynamic name
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
+        return;
+
+    QTextStream out(&file);
+    out << "Qt-eMitus;";
+    out << totalSeconds;
+    for(int i = 0; i <=totalSeconds;i++)
+    {
+        if (qtesSeconds.contains(i))
+        {
+            out << "qte;" << i;
+        }
+
+        if (targetsSeconds.contains(i))
+        {
+            out << "target;" << i;
+        }
+    }
+}
+
 void Level::addTarget(int timeSeconds)
 {
     this->targetsSeconds.append(timeSeconds);
@@ -55,4 +79,9 @@ void Level::addTarget(int timeSeconds)
 void Level::addQTE(int timeSeconds)
 {
     this->qtesSeconds.append(timeSeconds);
+}
+
+void Level::setName(QString levelName)
+{
+    this->levelName = levelName;
 }

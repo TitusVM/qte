@@ -18,6 +18,7 @@ public:
     void removeQte(int timeSeconds);
     void updateTarget(int timeSeconds);
     void updateQte(int timeSeconds);
+    void setName(QString levelName);
 
 
     QList<int> targetsSeconds;
@@ -28,6 +29,7 @@ public:
 private:
     QString filePath;
     QString difficulty;
+    QString levelName;
 };
 
 #endif // LEVEL_H
