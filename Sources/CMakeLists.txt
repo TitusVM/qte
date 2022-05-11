@@ -52,6 +52,17 @@ set(PROJECT_SOURCES
         qte.cpp
         level.h
         level.cpp
+        leveleditor.cpp
+        leveleditor.h
+        eventmanager.h
+        eventmanager.cpp
+        commandmanager.h
+        commandmanager.cpp
+        action_i.h
+        addtarget.h
+        addtarget.cpp
+        addqte.h
+        addqte.cpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
@@ -107,6 +118,7 @@ include(GoogleTest)
 gtest_discover_tests(tests)
 enable_testing()
 
+
 ###############################################################################
 ##########          DOXYGEN
 ###############################################################################
@@ -124,4 +136,3 @@ add_custom_target(BuildDoc ALL
   COMMENT "Generating Doxygen documentation"
   VERBATIM
 )
-
