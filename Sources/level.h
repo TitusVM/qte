@@ -6,8 +6,9 @@
 #include "qte.h"
 #include "graphicsscene.h"
 
-class Level
+class Level : public QObject
 {
+    Q_OBJECT
 public:
     Level(QString filePath);
     void exportLevel();
@@ -16,8 +17,8 @@ public:
     void addQTE(int timeSeconds);
     void removeTarget(int timeSeconds);
     void removeQte(int timeSeconds);
-    void updateTarget(int timeSeconds);
-    void updateQte(int timeSeconds);
+    void updateTarget(int oldTimeSeconds, int newTimeSeconds);
+    void updateQte(int oldTimeSeconds, int newTimeSeconds);
     void setName(QString levelName);
 
 
@@ -30,6 +31,9 @@ private:
     QString filePath;
     QString difficulty;
     QString levelName;
+
+signals:
+    void signalLevelChanged();
 };
 
 #endif // LEVEL_H

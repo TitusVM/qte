@@ -2,20 +2,21 @@
 #define ADDQTE_H
 
 #include "action_i.h"
+#include "level.h"
 
 #include <QChar>
 
 class AddQte : public Action_I
 {
 public:
-    AddQte(int timeSeconds, QChar* letter);
+    AddQte(int timeSeconds, Level *level);
     void execute();
     void undo();
     void redo();
 
 private:
     int timeSeconds;
-    QChar* letter;
+    Level* level;
 };
 
 #endif // ADDQTE_H

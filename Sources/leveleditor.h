@@ -49,8 +49,6 @@ private:
 
     //QString filePath;
 
-    QComboBox *comboChar;
-
     QLineEdit *linName;
 
     QGridLayout *mainLayout;

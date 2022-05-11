@@ -10,9 +10,10 @@ Level::Level(QString filePath)
 void Level::importLevel()
 {
     QString levelPath = "../Sources/Levels/" + this->filePath;
-    QFile file(levelPath);
+    QFile file(this->filePath);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
+        qDebug() << "Error reading file";
         return;
     }
 
@@ -37,11 +38,18 @@ void Level::importLevel()
 
             if (events.at(0) == "target")
             {
-                this->addTarget(events.at(1).toInt());
+                if (!this->targetsSeconds.contains(events.at(1).toInt()))
+                {
+                    this->addTarget(events.at(1).toInt());
+                }
             }
             else if (events.at(0) == "qte")
             {
-                this->addQTE(events.at(1).toInt());
+                if (!this->qtesSeconds.contains(events.at(1).toInt()))
+                {
+                    this->addQTE(events.at(1).toInt());
+                }
+
             }
         }
     }
@@ -74,14 +82,43 @@ void Level::exportLevel()
 void Level::addTarget(int timeSeconds)
 {
     this->targetsSeconds.append(timeSeconds);
+    emit signalLevelChanged();
 }
 
 void Level::addQTE(int timeSeconds)
 {
     this->qtesSeconds.append(timeSeconds);
+    emit signalLevelChanged();
+}
+
+void Level::removeTarget(int timeSeconds)
+{
+    this->targetsSeconds.removeAt(timeSeconds);
+    emit signalLevelChanged();
+}
+
+void Level::removeQte(int timeSeconds)
+{
+    this->qtesSeconds.removeAt(timeSeconds);
+    emit signalLevelChanged();
+}
+
+void Level::updateTarget(int oldTimeSeconds, int newTimeSeconds)
+{
+    this->targetsSeconds.removeAt(oldTimeSeconds);
+    this->targetsSeconds.append(newTimeSeconds);
+    emit signalLevelChanged();
+}
+
+void Level::updateQte(int oldTimeSeconds, int newTimeSeconds)
+{
+    this->qtesSeconds.removeAt(oldTimeSeconds);
+    this->qtesSeconds.append(newTimeSeconds);
+    emit signalLevelChanged();
 }
 
 void Level::setName(QString levelName)
 {
     this->levelName = levelName;
 }
+

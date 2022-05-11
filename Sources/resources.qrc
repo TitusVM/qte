@@ -1,5 +1,8 @@
-<!DOCTYPE RCC><RCC version="1.0">
-<qresource>
-    <file>images/logo.svg</file>
-   </qresource>
+<RCC>
+    <qresource prefix="/">
+        <file>images/logo.svg</file>
+        <file>Levels/Easy.csv</file>
+        <file>Levels/Hard.csv</file>
+        <file>Levels/Normal.csv</file>
+    </qresource>
 </RCC>

@@ -2,24 +2,23 @@
 
 #include <QDebug>
 
-AddQte::AddQte(int timeSeconds, QChar* letter)
+AddQte::AddQte(int timeSeconds, Level *level)
 {
     this->timeSeconds = timeSeconds;
-    this->letter = letter;
+    this->level = level;
 }
 
 void AddQte::execute()
 {
-    qDebug() << "addqte execute";
+    this->level->addQTE(this->timeSeconds);
 }
 
 void AddQte::undo()
 {
-    qDebug() << "addqte undo";
+    this->level->removeQte(this->timeSeconds);
 }
 
 void AddQte::redo()
 {
-    qDebug() << "addqte redo";
+    this->execute();
 }
-
