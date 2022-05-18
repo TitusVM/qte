@@ -7,6 +7,12 @@ Level::Level(QString filePath)
     this->totalSeconds = 0;
 }
 
+Level::Level()
+{
+    this->filePath = "";
+    this->totalSeconds = 0;
+}
+
 void Level::importLevel()
 {
     QString levelPath = "../Sources/Levels/" + this->filePath;
@@ -37,11 +43,18 @@ void Level::importLevel()
 
             if (events.at(0) == "target")
             {
-                this->addTarget(events.at(1).toInt());
+                if (!this->targetsSeconds.contains(events.at(1).toInt()))
+                {
+                    this->addTarget(events.at(1).toInt());
+                }
             }
             else if (events.at(0) == "qte")
             {
-                this->addQTE(events.at(1).toInt());
+                if (!this->qtesSeconds.contains(events.at(1).toInt()))
+                {
+                    this->addQTE(events.at(1).toInt());
+                }
+
             }
         }
     }
@@ -79,6 +92,28 @@ void Level::addTarget(int timeSeconds)
 void Level::addQTE(int timeSeconds)
 {
     this->qtesSeconds.append(timeSeconds);
+}
+
+void Level::removeTarget(int timeSeconds)
+{
+    this->targetsSeconds.removeAt(timeSeconds);
+}
+
+void Level::removeQte(int timeSeconds)
+{
+    this->qtesSeconds.removeAt(timeSeconds);
+}
+
+void Level::updateTarget(int oldTimeSeconds, int newTimeSeconds)
+{
+    this->targetsSeconds.removeAt(oldTimeSeconds);
+    this->targetsSeconds.append(newTimeSeconds);
+}
+
+void Level::updateQte(int oldTimeSeconds, int newTimeSeconds)
+{
+    this->qtesSeconds.removeAt(oldTimeSeconds);
+    this->qtesSeconds.append(newTimeSeconds);
 }
 
 void Level::setName(QString levelName)

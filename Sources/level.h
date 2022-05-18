@@ -10,14 +10,15 @@ class Level
 {
 public:
     Level(QString filePath);
+    Level();
     void exportLevel();
     void importLevel();
     void addTarget(int timeSeconds);
     void addQTE(int timeSeconds);
     void removeTarget(int timeSeconds);
     void removeQte(int timeSeconds);
-    void updateTarget(int timeSeconds);
-    void updateQte(int timeSeconds);
+    void updateTarget(int oldTimeSeconds, int newTimeSeconds);
+    void updateQte(int oldTimeSeconds, int newTimeSeconds);
     void setName(QString levelName);
 
 

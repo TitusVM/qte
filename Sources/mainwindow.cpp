@@ -13,7 +13,7 @@ void MainWindow::createUI()
     this->newAccountWindow = new NewAccount();
     this->newGameWindow = new NewGame();
     this->gameplayWindow = new Gameplay();
-    this->levelEditorWindow = new LevelEditor();
+    //this->levelEditorWindow = new LevelEditor();
     this->widgetStack = new QStack<QWidget*>;
 
     connect(this->loginWindow, &Login::signalNewAcc, this, &MainWindow::slotNewAcc);
@@ -22,14 +22,14 @@ void MainWindow::createUI()
     connect(this->newGameWindow, &NewGame::signalLevelPlay, this, &MainWindow::slotPlay);
     connect(this->gameplayWindow, &Gameplay::signalGameOver, this, &MainWindow::slotGameOver);
 
-    this->widgetStack->push(this->loginWindow);
-    this->widgetStack->push(this->newAccountWindow);
+    //this->widgetStack->push(this->loginWindow);
+    //this->widgetStack->push(this->newAccountWindow);
 
     //setCentralWidget(this->loginWindow);
-    //setCentralWidget(this->newGameWindow);
-    this->widgetStack->push(this->newGameWindow);
-    this->widgetStack->push(this->gameplayWindow);
-    setCentralWidget(this->levelEditorWindow);
+    setCentralWidget(this->newGameWindow);
+    //this->widgetStack->push(this->newGameWindow);
+    //this->widgetStack->push(this->gameplayWindow);
+    //setCentralWidget(this->levelEditorWindow);
 }
 
 MainWindow::~MainWindow()
