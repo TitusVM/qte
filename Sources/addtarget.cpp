@@ -2,22 +2,25 @@
 
 #include <QDebug>
 
-AddTarget::AddTarget(int timeSeconds)
+AddTarget::AddTarget(int timeSeconds, Level *level)
 {
-     this->timeSeconds = timeSeconds;
+    this->timeSeconds = timeSeconds;
+    this->level = level;
 }
 
 void AddTarget::execute()
 {
-    qDebug() << "addtarget execute";
+    this->level->addTarget(this->timeSeconds);
+    this->level->sortTargets();
 }
 
 void AddTarget::undo()
 {
-    qDebug() << "addtarget undo";
+    this->level->removeTarget(this->timeSeconds);
+    this->level->sortTargets();
 }
 
 void AddTarget::redo()
 {
-    qDebug() << "addtarget redo";
+    this->execute();
 }

@@ -1,4 +1,5 @@
 #include "commandmanager.h"
+#include <QDebug>
 
 CommandManager::CommandManager()
 {

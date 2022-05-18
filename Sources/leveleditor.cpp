@@ -11,13 +11,21 @@ LevelEditor::LevelEditor(QWidget *parent) : QWidget(parent)
     //this->btnAddMovTarget = new QPushButton(tr("Add Moving Target"));
    // this->btnAddGrowTarget = new QPushButton(tr("Add Growing Target"));
 
+    this->level = new Level(":/Levels/Easy.csv");
+    this->level->importLevel();
+    this->eventManager = new EventManager(this->level);
 
     this->commandManager = new CommandManager();
     this->btnUndo = new QPushButton(tr("Undo"));
+    this->btnUndo->setShortcut(tr("Ctrl+Z"));
     this->btnRedo = new QPushButton(tr("Redo"));
+    this->btnRedo->setShortcut(tr("Ctrl+Y"));
+    this->btnSave = new QPushButton(tr("Save"));
+    this->btnSave->setShortcut(tr("Ctrl+S"));
 
     connect(this->btnUndo, &QPushButton::clicked, this, &LevelEditor::slotUndo);
     connect(this->btnRedo, &QPushButton::clicked, this, &LevelEditor::slotRedo);
+    connect(this->btnSave, &QPushButton::clicked, this, &LevelEditor::slotSave);
 
     this->btnAddTarget = new QPushButton(tr("Add Target"));
     this->linTimeTarget = new QLineEdit(this->secondsToString(300));
@@ -37,10 +45,7 @@ LevelEditor::LevelEditor(QWidget *parent) : QWidget(parent)
     this->btnCreate = new QPushButton(tr("Save Level"));
 
     // TODO
-    this->level = new Level();
-
-    this->comboChar = new QComboBox();
-    this->eventManager = new EventManager(this->level);
+    // this->level = new Level();
 
     this->mainLayout = new QGridLayout();
 
@@ -57,23 +62,16 @@ LevelEditor::LevelEditor(QWidget *parent) : QWidget(parent)
  */
 void LevelEditor::createUI()
 {
-    QString alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
-    foreach(QChar character, alphabet)
-    {
-        this->comboChar->addItem(character);
-    }
-
     this->mainLayout->addWidget(this->eventManager, 0,0,3,3);
     this->mainLayout->addWidget(this->linTimeTarget, 0,3,1,1);
     this->mainLayout->addWidget(this->btnAddTarget, 0,4,1,2);
     this->mainLayout->addWidget(this->linSelectedEvent, 1,3,1,1);
     this->mainLayout->addWidget(this->btnDeleteEvent, 1,4,1,2);
-    this->mainLayout->addWidget(this->comboChar, 2,3,1,1);
     this->mainLayout->addWidget(this->linTimeQte, 2,4,1,1);
     this->mainLayout->addWidget(this->btnAddQte, 2,5,1,1);
     this->mainLayout->addWidget(this->btnUndo, 3,0,1,1);
     this->mainLayout->addWidget(this->btnRedo, 3,1,1,1);
+    this->mainLayout->addWidget(this->btnSave, 3,2,1,1);
 
     setLayout(this->mainLayout);
 }
@@ -107,8 +105,7 @@ int LevelEditor::stringToSeconds(QString timeString)
 void LevelEditor::slotAddTarget()
 {
     int addAt = this->stringToSeconds(this->linTimeTarget->text());
-    qDebug() << "add Target at " << addAt;
-    AddTarget *addTarget = new AddTarget(addAt);
+    AddTarget *addTarget = new AddTarget(addAt, this->level);
     commandManager->execute(addTarget);
 }
 
@@ -120,10 +117,7 @@ void LevelEditor::slotAddTarget()
 void LevelEditor::slotAddQte()
 {
     int addAt = this->stringToSeconds(this->linTimeQte->text());
-    QChar* addLetter = this->comboChar->currentText().data();
-    int addLetterAsAscii = (int)(char)addLetter->toLatin1();
-    qDebug() << "add " << addLetterAsAscii << " Qte at " << addAt;
-    AddQte *addQte = new AddQte(addAt, addLetter);
+    AddQte *addQte = new AddQte(addAt, this->level);
     commandManager->execute(addQte);
 }
 
@@ -135,4 +129,9 @@ void LevelEditor::slotUndo()
 void LevelEditor::slotRedo()
 {
     this->commandManager->redo();
+}
+
+void LevelEditor::slotSave()
+{
+    this->level->exportLevel();
 }

@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QHBoxLayout>
 #include <QListView>
+#include <QStandardItemModel>
 #include "level.h"
 
 class EventManager : public QWidget
@@ -14,12 +15,18 @@ public:
 
 private:
     Level *level;
-    QListView *listView;
+    QListView *listViewTargets;
+    QListView *listViewQtes;
+
+private slots:
+    void slotLevelChanged();
 
 // UI
 private:
     QHBoxLayout *hbox;
     void createUI();
+    QStandardItemModel *fetchModelTarget();
+    QStandardItemModel *fetchModelQte();
 };
 
 #endif // EVENTMANAGER_H

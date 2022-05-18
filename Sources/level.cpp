@@ -1,9 +1,9 @@
 #include "level.h"
-#include <QFile>
+#include <QPair>
 
 Level::Level(QString filePath)
 {
-    this->filePath = filePath;
+    this->fileName = filePath;
     this->totalSeconds = 0;
 }
 
@@ -15,10 +15,10 @@ Level::Level()
 
 void Level::importLevel()
 {
-    QString levelPath = "../Sources/Levels/" + this->filePath;
-    QFile file(levelPath);
+    QFile file(this->fileName);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
+        qDebug() << "Error reading file";
         return;
     }
 
@@ -86,12 +86,58 @@ void Level::exportLevel()
 
 void Level::addTarget(int timeSeconds)
 {
-    this->targetsSeconds.append(timeSeconds);
+    if(!this->targetsSeconds.contains(timeSeconds))
+    {
+        this->targetsSeconds.append(timeSeconds);
+        emit signalLevelChanged();
+    }
 }
 
 void Level::addQTE(int timeSeconds)
 {
-    this->qtesSeconds.append(timeSeconds);
+    if(!this->qtesSeconds.contains(timeSeconds))
+    {
+        this->qtesSeconds.append(timeSeconds);
+        emit signalLevelChanged();
+    }
+}
+
+void Level::removeTarget(int timeSeconds)
+{
+    if(this->targetsSeconds.contains(timeSeconds))
+    {
+        this->targetsSeconds.removeOne(timeSeconds);
+        emit signalLevelChanged();
+    }
+}
+
+void Level::removeQte(int timeSeconds)
+{
+    if(this->qtesSeconds.contains(timeSeconds))
+    {
+        this->qtesSeconds.removeOne(timeSeconds);
+        emit signalLevelChanged();
+    }
+}
+
+void Level::updateTarget(int oldTimeSeconds, int newTimeSeconds)
+{
+    if(!this->targetsSeconds.contains(oldTimeSeconds))
+    {
+        this->targetsSeconds.removeOne(oldTimeSeconds);
+        this->targetsSeconds.append(newTimeSeconds);
+        emit signalLevelChanged();
+    }
+}
+
+void Level::updateQte(int oldTimeSeconds, int newTimeSeconds)
+{
+    if(!this->qtesSeconds.contains(oldTimeSeconds))
+    {
+        this->qtesSeconds.removeOne(oldTimeSeconds);
+        this->qtesSeconds.append(newTimeSeconds);
+        emit signalLevelChanged();
+    }
 }
 
 void Level::removeTarget(int timeSeconds)
@@ -120,3 +166,16 @@ void Level::setName(QString levelName)
 {
     this->levelName = levelName;
 }
+
+void Level::sortQtes()
+{
+    std::sort(this->qtesSeconds.begin(), this->qtesSeconds.end());
+    emit signalLevelChanged();
+}
+
+void Level::sortTargets()
+{
+    std::sort(this->targetsSeconds.begin(), this->targetsSeconds.end());
+    emit signalLevelChanged();
+}
+
