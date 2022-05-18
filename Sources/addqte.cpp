@@ -11,11 +11,13 @@ AddQte::AddQte(int timeSeconds, Level *level)
 void AddQte::execute()
 {
     this->level->addQTE(this->timeSeconds);
+    this->level->sortQtes();
 }
 
 void AddQte::undo()
 {
     this->level->removeQte(this->timeSeconds);
+    this->level->sortQtes();
 }
 
 void AddQte::redo()

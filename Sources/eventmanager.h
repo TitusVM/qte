@@ -15,7 +15,8 @@ public:
 
 private:
     Level *level;
-    QListView *listView;
+    QListView *listViewTargets;
+    QListView *listViewQtes;
 
 private slots:
     void slotLevelChanged();
@@ -24,7 +25,8 @@ private slots:
 private:
     QHBoxLayout *hbox;
     void createUI();
-    QStandardItemModel *fetchModel();
+    QStandardItemModel *fetchModelTarget();
+    QStandardItemModel *fetchModelQte();
 };
 
 #endif // EVENTMANAGER_H

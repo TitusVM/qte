@@ -1,9 +1,13 @@
 #include "eventmanager.h"
+#include <QAbstractItemView>
 
 EventManager::EventManager(Level *level) : QWidget(nullptr)
 {
     this->level = level;
-    this->listView = new QListView();
+    this->listViewTargets = new QListView();
+    this->listViewTargets->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    this->listViewQtes = new QListView();
+    this->listViewQtes->setEditTriggers(QAbstractItemView::NoEditTriggers);
     connect(this->level, &Level::signalLevelChanged, this, &EventManager::slotLevelChanged);
     this->hbox = new QHBoxLayout();
 
@@ -12,58 +16,41 @@ EventManager::EventManager(Level *level) : QWidget(nullptr)
 
 void EventManager::createUI()
 {
-    this->listView->setModel(this->fetchModel());
-    this->hbox->addWidget(this->listView);
+    this->listViewTargets->setModel(this->fetchModelTarget());
+    this->listViewQtes->setModel(this->fetchModelQte());
+    this->hbox->addWidget(this->listViewTargets);
+    this->hbox->addWidget(this->listViewQtes);
     setLayout(this->hbox);
 }
 
-QStandardItemModel* EventManager::fetchModel()
+QStandardItemModel* EventManager::fetchModelTarget()
 {
     QStandardItem *item;
     QStandardItemModel *model = new QStandardItemModel();
     QString itemString = "";
-
-    int maxElements = this->level->targetsSeconds.length();
-    int minElements = 0;
-    bool qteMax;
-    if(this->level->qtesSeconds.length() > this->level->targetsSeconds.length())
-    {
-        qteMax = true;
-        maxElements = this->level->qtesSeconds.length();
-        minElements = this->level->targetsSeconds.length();
-    }
-    else
-    {
-        qteMax = false;
-        minElements = this->level->qtesSeconds.length();
-    }
-
     size_t counter;
 
-    for (counter = 0; counter < minElements ; counter++)
+    for (size_t i = 0; i < this->level->targetsSeconds.length(); i++)
     {
-        itemString = "Target : " + QString::number(this->level->targetsSeconds[counter]);
-        item = new QStandardItem(itemString);
-        model->appendRow(item);
-        itemString = "Qte : " + QString::number(this->level->qtesSeconds[counter]);
+        itemString = "Target : " + QString::number(this->level->targetsSeconds[i]);
         item = new QStandardItem(itemString);
         model->appendRow(item);
     }
+    return model;
+}
 
-    while (counter < maxElements)
+QStandardItemModel* EventManager::fetchModelQte()
+{
+    QStandardItem *item;
+    QStandardItemModel *model = new QStandardItemModel();
+    QString itemString = "";
+    size_t counter;
+
+    for (size_t i = 0; i < this->level->qtesSeconds.length(); i++)
     {
-        if(qteMax)
-        {
-            itemString = "Qte : " + QString::number(this->level->qtesSeconds[counter++]);
-            item = new QStandardItem(itemString);
-            model->appendRow(item);
-        }
-        else
-        {
-            itemString = "Target : " + QString::number(this->level->targetsSeconds[counter++]);
-            item = new QStandardItem(itemString);
-            model->appendRow(item);
-        }
+        itemString = "Qte : " + QString::number(this->level->qtesSeconds[i]);
+        item = new QStandardItem(itemString);
+        model->appendRow(item);
     }
     return model;
 }
@@ -72,5 +59,6 @@ QStandardItemModel* EventManager::fetchModel()
 
 void EventManager::slotLevelChanged()
 {
-    this->listView->setModel(this->fetchModel());
+    this->listViewTargets->setModel(this->fetchModelTarget());
+    this->listViewQtes->setModel(this->fetchModelQte());
 }

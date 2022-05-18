@@ -31,6 +31,7 @@ private:
 
     QPushButton *btnUndo;
     QPushButton *btnRedo;
+    QPushButton *btnSave;
 
     QPushButton *btnAddTarget;
     QLineEdit *linTimeTarget;
@@ -71,6 +72,7 @@ private slots:
     void slotAddQte();
     void slotUndo();
     void slotRedo();
+    void slotSave();
 
 };
 

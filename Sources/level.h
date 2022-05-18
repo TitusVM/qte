@@ -2,6 +2,9 @@
 #define LEVEL_H
 #include <QString>
 #include <QList>
+#include <QFile>
+#include <algorithm>
+
 #include "target.h"
 #include "qte.h"
 #include "graphicsscene.h"
@@ -20,6 +23,8 @@ public:
     void updateTarget(int oldTimeSeconds, int newTimeSeconds);
     void updateQte(int oldTimeSeconds, int newTimeSeconds);
     void setName(QString levelName);
+    void sortQtes();
+    void sortTargets();
 
 
     QList<int> targetsSeconds;
@@ -28,7 +33,7 @@ public:
     int totalSeconds;
 
 private:
-    QString filePath;
+    QString fileName;
     QString difficulty;
     QString levelName;
 

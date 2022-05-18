@@ -11,11 +11,13 @@ AddTarget::AddTarget(int timeSeconds, Level *level)
 void AddTarget::execute()
 {
     this->level->addTarget(this->timeSeconds);
+    this->level->sortTargets();
 }
 
 void AddTarget::undo()
 {
     this->level->removeTarget(this->timeSeconds);
+    this->level->sortTargets();
 }
 
 void AddTarget::redo()

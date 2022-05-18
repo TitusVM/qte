@@ -17,10 +17,15 @@ LevelEditor::LevelEditor(QWidget *parent) : QWidget(parent)
 
     this->commandManager = new CommandManager();
     this->btnUndo = new QPushButton(tr("Undo"));
+    this->btnUndo->setShortcut(tr("Ctrl+Z"));
     this->btnRedo = new QPushButton(tr("Redo"));
+    this->btnRedo->setShortcut(tr("Ctrl+Y"));
+    this->btnSave = new QPushButton(tr("Save"));
+    this->btnSave->setShortcut(tr("Ctrl+S"));
 
     connect(this->btnUndo, &QPushButton::clicked, this, &LevelEditor::slotUndo);
     connect(this->btnRedo, &QPushButton::clicked, this, &LevelEditor::slotRedo);
+    connect(this->btnSave, &QPushButton::clicked, this, &LevelEditor::slotSave);
 
     this->btnAddTarget = new QPushButton(tr("Add Target"));
     this->linTimeTarget = new QLineEdit(this->secondsToString(300));
@@ -66,6 +71,7 @@ void LevelEditor::createUI()
     this->mainLayout->addWidget(this->btnAddQte, 2,5,1,1);
     this->mainLayout->addWidget(this->btnUndo, 3,0,1,1);
     this->mainLayout->addWidget(this->btnRedo, 3,1,1,1);
+    this->mainLayout->addWidget(this->btnSave, 3,2,1,1);
 
     setLayout(this->mainLayout);
 }
@@ -99,7 +105,6 @@ int LevelEditor::stringToSeconds(QString timeString)
 void LevelEditor::slotAddTarget()
 {
     int addAt = this->stringToSeconds(this->linTimeTarget->text());
-    qDebug() << "add Target at " << addAt;
     AddTarget *addTarget = new AddTarget(addAt, this->level);
     commandManager->execute(addTarget);
 }
@@ -124,4 +129,9 @@ void LevelEditor::slotUndo()
 void LevelEditor::slotRedo()
 {
     this->commandManager->redo();
+}
+
+void LevelEditor::slotSave()
+{
+    this->level->exportLevel();
 }
