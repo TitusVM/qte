@@ -1,8 +1,8 @@
 #include "level.h"
-#include <QPair>
 
 Level::Level(QString filePath)
 {
+
     this->fileName = filePath;
     this->totalSeconds = 0;
 }
@@ -10,9 +10,10 @@ Level::Level(QString filePath)
 void Level::importLevel()
 {
     QFile file(this->fileName);
+    qDebug() << "Importing from " + this->fileName;
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
-        qDebug() << "Error reading file";
+        qDebug() << "Error reading file " + this->fileName;
         return;
     }
 
@@ -51,15 +52,19 @@ void Level::importLevel()
 
             }
         }
+        file.close();
     }
 }
 
 
 void Level::exportLevel()
 {
-    QFile file(levelName); // TODO dynamic name
-    if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
+    QFile file(this->fileName);
+    if (!file.open(QIODevice::ReadWrite | QIODevice::Text))
+    {
+        qDebug() << "Error reading file " + this->fileName;
         return;
+    }
 
     QTextStream out(&file);
     out << "Qt-eMitus;";
@@ -68,14 +73,15 @@ void Level::exportLevel()
     {
         if (qtesSeconds.contains(i))
         {
-            out << "qte;" << i;
+            out << "qte;\n" << i << "\n";
         }
 
         if (targetsSeconds.contains(i))
         {
-            out << "target;" << i;
+            out << "target;" << i << "\n";
         }
     }
+    file.close();
 }
 
 void Level::addTarget(int timeSeconds)

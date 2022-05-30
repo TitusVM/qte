@@ -13,7 +13,7 @@ void MainWindow::createUI()
     this->newAccountWindow = new NewAccount();
     this->newGameWindow = new NewGame();
     this->gameplayWindow = new Gameplay();
-    this->levelEditorWindow = new LevelEditor();
+    this->mainScreenWindow = new MainScreen();
     this->widgetStack = new QStack<QWidget*>;
 
     connect(this->loginWindow, &Login::signalNewAcc, this, &MainWindow::slotNewAcc);
@@ -21,6 +21,7 @@ void MainWindow::createUI()
     connect(this->loginWindow, &Login::signalLoggedIn, this, &MainWindow::slotLoggedIn);
     connect(this->newGameWindow, &NewGame::signalLevelPlay, this, &MainWindow::slotPlay);
     connect(this->gameplayWindow, &Gameplay::signalGameOver, this, &MainWindow::slotGameOver);
+    connect(this->mainScreenWindow, &MainScreen::signalLevelEditor, this, &MainWindow::slotLevelEditor);
 
     this->widgetStack->push(this->loginWindow);
     this->widgetStack->push(this->newAccountWindow);
@@ -29,7 +30,7 @@ void MainWindow::createUI()
     //setCentralWidget(this->newGameWindow);
     this->widgetStack->push(this->newGameWindow);
     this->widgetStack->push(this->gameplayWindow);
-    setCentralWidget(this->levelEditorWindow);
+    setCentralWidget(this->mainScreenWindow);
 }
 
 MainWindow::~MainWindow()
@@ -66,6 +67,12 @@ void MainWindow::slotLoggedIn()
     this->widgetStack->push(this->loginWindow);
     takeCentralWidget();
     setCentralWidget(this->mainScreenWindow);
+}
+
+void MainWindow::slotLevelEditor()
+{
+    this->levelEditorWindow = new LevelEditor();
+    setCentralWidget(this->levelEditorWindow);
 }
 
 void MainWindow::slotQuit()

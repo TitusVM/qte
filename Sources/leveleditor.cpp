@@ -1,4 +1,5 @@
 #include "leveleditor.h"
+#include <QFileDialog>
 
 /**
  * @brief LevelEditor::LevelEditor
@@ -11,7 +12,7 @@ LevelEditor::LevelEditor(QWidget *parent) : QWidget(parent)
     //this->btnAddMovTarget = new QPushButton(tr("Add Moving Target"));
    // this->btnAddGrowTarget = new QPushButton(tr("Add Growing Target"));
 
-    this->level = new Level(":/Levels/Easy.csv");
+    this->level = new Level(QFileDialog::getOpenFileName(this, tr("Open Level"), ".", tr("Level Files (*.csv)")));
     this->level->importLevel();
     this->eventManager = new EventManager(this->level);
 

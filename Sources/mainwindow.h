@@ -39,5 +39,6 @@ public slots:
     void slotQuit();
     void slotPlay(QString levelName);
     void slotGameOver();
+    void slotLevelEditor();
 };
 #endif // MAINWINDOW_H
