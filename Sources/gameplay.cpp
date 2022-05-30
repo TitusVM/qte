@@ -40,6 +40,9 @@ Gameplay::Gameplay(QWidget *parent) : QWidget(parent)
     viewTargets->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     viewTargets->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
+    connect(this->sceneTargets, &GraphicsScene::signalRepaintTarget, this, &Gameplay::slotRepaintTarget);
+    connect(this->sceneTargets, &GraphicsScene::signalRepaintQTE, this, &Gameplay::slotRepaintQTE);
+
     score = 0;
     qteTotal = 0;
     qteHit = 0;
@@ -47,9 +50,9 @@ Gameplay::Gameplay(QWidget *parent) : QWidget(parent)
     targetHit = 0;
 
     createUI();
-    //setMinimumSize(QSize(1200, 600));
+    setMinimumSize(QSize(1200, 600));
 
-    //viewTargets->setFocus();
+    viewTargets->setFocus();
 }
 
 
@@ -181,6 +184,16 @@ void Gameplay::slotUpdate()
 
 
     this->lblSecondsLeft->setText("Seconds left : " + QString::number(this->level->totalSeconds - seconds));
+}
+
+void Gameplay::slotRepaintTarget()
+{
+    clearTargets();
+}
+
+void Gameplay::slotRepaintQTE()
+{
+    clearQtes();
 }
 
 void Gameplay::clearTargets()

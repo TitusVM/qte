@@ -56,6 +56,8 @@ private slots:
     void slotSelectDifficulty();
     void slotPlayCustom();
     void slotUpdate();
+    void slotRepaintTarget();
+    void slotRepaintQTE();
 
 signals:
     void signalGameOver();

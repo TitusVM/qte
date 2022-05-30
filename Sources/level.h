@@ -14,6 +14,7 @@ class Level : public QObject
     Q_OBJECT
 public:
     Level(QString filePath);
+    Level();
     void exportLevel();
     void importLevel();
     void addTarget(int timeSeconds);

@@ -7,6 +7,12 @@ Level::Level(QString filePath)
     this->totalSeconds = 0;
 }
 
+Level::Level()
+{
+    this->filePath = "";
+    this->totalSeconds = 0;
+}
+
 void Level::importLevel()
 {
     QFile file(this->fileName);
@@ -138,6 +144,28 @@ void Level::updateQte(int oldTimeSeconds, int newTimeSeconds)
         this->qtesSeconds.append(newTimeSeconds);
         emit signalLevelChanged();
     }
+}
+
+void Level::removeTarget(int timeSeconds)
+{
+    this->targetsSeconds.removeAt(timeSeconds);
+}
+
+void Level::removeQte(int timeSeconds)
+{
+    this->qtesSeconds.removeAt(timeSeconds);
+}
+
+void Level::updateTarget(int oldTimeSeconds, int newTimeSeconds)
+{
+    this->targetsSeconds.removeAt(oldTimeSeconds);
+    this->targetsSeconds.append(newTimeSeconds);
+}
+
+void Level::updateQte(int oldTimeSeconds, int newTimeSeconds)
+{
+    this->qtesSeconds.removeAt(oldTimeSeconds);
+    this->qtesSeconds.append(newTimeSeconds);
 }
 
 void Level::setName(QString levelName)

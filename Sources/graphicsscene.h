@@ -6,6 +6,8 @@
 
 class GraphicsScene : public QGraphicsScene
 {
+    Q_OBJECT
+
 public:
     GraphicsScene(Gameplay *parent = 0);
     void setX(int value);
@@ -17,6 +19,10 @@ public:
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
     void keyPressEvent(QKeyEvent *event);
+
+signals:
+    void signalRepaintTarget();
+    void signalRepaintQTE();
 
 private:
     int x;
