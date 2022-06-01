@@ -7,13 +7,27 @@
  *
  * Public Constructor, initializing attributes and connecting signals to slots
  */
-LevelEditor::LevelEditor(QWidget *parent) : QWidget(parent)
+LevelEditor::LevelEditor(bool isNewLevel, QWidget *parent) : QWidget(parent)
 {
     //this->btnAddMovTarget = new QPushButton(tr("Add Moving Target"));
    // this->btnAddGrowTarget = new QPushButton(tr("Add Growing Target"));
-
-    this->level = new Level(QFileDialog::getOpenFileName(this, tr("Open Level"), ".", tr("Level Files (*.csv)")));
-    this->level->importLevel();
+    this->isNewLevel = isNewLevel;
+    this->isSaved = true;
+    this->level = nullptr;
+    if(!isNewLevel)
+    {
+        this->level = new Level(QFileDialog::getOpenFileName(this, tr("Open Level"), ".", tr("Level Files (*.csv)")));
+        if(this->level != nullptr) this->level->importLevel();
+        else
+        {
+            this->isNewLevel = true;
+            this->level = new Level();
+        }
+    }
+    else
+    {
+        this->level = new Level();
+    }
     this->eventManager = new EventManager(this->level);
 
     this->commandManager = new CommandManager();
@@ -23,23 +37,32 @@ LevelEditor::LevelEditor(QWidget *parent) : QWidget(parent)
     this->btnRedo->setShortcut(tr("Ctrl+Y"));
     this->btnSave = new QPushButton(tr("Save"));
     this->btnSave->setShortcut(tr("Ctrl+S"));
+    this->btnBack = new QPushButton(tr("Back"));
+    this->btnBack->setShortcut(tr("Backspace"));
 
     connect(this->btnUndo, &QPushButton::clicked, this, &LevelEditor::slotUndo);
     connect(this->btnRedo, &QPushButton::clicked, this, &LevelEditor::slotRedo);
     connect(this->btnSave, &QPushButton::clicked, this, &LevelEditor::slotSave);
+    connect(this->btnBack, &QPushButton::clicked, this, &LevelEditor::slotBack);
 
     this->btnAddTarget = new QPushButton(tr("Add Target"));
-    this->linTimeTarget = new QLineEdit(this->secondsToString(300));
+    this->linTimeTarget = new QLineEdit(this->secondsToString(0));
     this->linTimeTarget->setInputMask("00:00");
 
     this->btnDeleteEvent = new QPushButton(tr("Delete"));
-    this->btnDeleteEvent->setDisabled(true);
+    this->radioTarget = new QRadioButton(tr("Target"));
+    this->radioQte = new QRadioButton(tr("Qte"));
+    this->radioTarget->setChecked(true);
+    QHBoxLayout *hbox = new QHBoxLayout();
+    hbox->addWidget(this->radioTarget);
+    hbox->addWidget(this->radioQte);
+    this->radioGroup = new QGroupBox();
+    this->radioGroup->setLayout(hbox);
     this->linSelectedEvent = new QLineEdit(this->secondsToString(0));
     this->linSelectedEvent->setInputMask("00:00");
-    this->linSelectedEvent->setDisabled(true);
 
     this->btnAddQte = new QPushButton(tr("Add QTE"));
-    this->linTimeQte = new QLineEdit(this->secondsToString(197));
+    this->linTimeQte = new QLineEdit(this->secondsToString(0));
     this->linTimeQte->setInputMask("00:00");
 
     this->btnManage = new QPushButton(tr("Manage Events"));
@@ -52,6 +75,8 @@ LevelEditor::LevelEditor(QWidget *parent) : QWidget(parent)
 
     connect(this->btnAddTarget, &QPushButton::clicked, this, &LevelEditor::slotAddTarget);
     connect(this->btnAddQte, &QPushButton::clicked, this, &LevelEditor::slotAddQte);
+    connect(this->btnDeleteEvent, &QPushButton::clicked, this, &LevelEditor::slotDeleteEvent);
+
 
     createUI();
 }
@@ -63,16 +88,18 @@ LevelEditor::LevelEditor(QWidget *parent) : QWidget(parent)
  */
 void LevelEditor::createUI()
 {
-    this->mainLayout->addWidget(this->eventManager, 0,0,3,3);
-    this->mainLayout->addWidget(this->linTimeTarget, 0,3,1,1);
-    this->mainLayout->addWidget(this->btnAddTarget, 0,4,1,2);
-    this->mainLayout->addWidget(this->linSelectedEvent, 1,3,1,1);
-    this->mainLayout->addWidget(this->btnDeleteEvent, 1,4,1,2);
-    this->mainLayout->addWidget(this->linTimeQte, 2,4,1,1);
-    this->mainLayout->addWidget(this->btnAddQte, 2,5,1,1);
-    this->mainLayout->addWidget(this->btnUndo, 3,0,1,1);
-    this->mainLayout->addWidget(this->btnRedo, 3,1,1,1);
-    this->mainLayout->addWidget(this->btnSave, 3,2,1,1);
+    this->mainLayout->addWidget(this->btnUndo, 0,0,1,1);
+    this->mainLayout->addWidget(this->btnRedo, 0,1,1,1);
+    this->mainLayout->addWidget(this->btnSave, 0,2,1,1);
+    this->mainLayout->addWidget(this->btnBack, 0,3,1,1);
+    this->mainLayout->addWidget(this->eventManager, 1,0,3,3);
+    this->mainLayout->addWidget(this->linTimeTarget, 1,3,1,1);
+    this->mainLayout->addWidget(this->btnAddTarget, 1,4,1,2);
+    this->mainLayout->addWidget(this->linSelectedEvent, 2,3,1,1);
+    this->mainLayout->addWidget(this->radioGroup, 2,4,1,1);
+    this->mainLayout->addWidget(this->btnDeleteEvent, 2,5,1,1);
+    this->mainLayout->addWidget(this->linTimeQte, 3,3,1,1);
+    this->mainLayout->addWidget(this->btnAddQte, 3,4,1,2);
 
     setLayout(this->mainLayout);
 }
@@ -97,7 +124,6 @@ int LevelEditor::stringToSeconds(QString timeString)
 }
 
 // SLOTS
-
 /**
  * @brief LevelEditor::slotAddTarget
  *
@@ -105,6 +131,7 @@ int LevelEditor::stringToSeconds(QString timeString)
  */
 void LevelEditor::slotAddTarget()
 {
+    this->isSaved = false;
     int addAt = this->stringToSeconds(this->linTimeTarget->text());
     AddTarget *addTarget = new AddTarget(addAt, this->level);
     commandManager->execute(addTarget);
@@ -120,6 +147,23 @@ void LevelEditor::slotAddQte()
     int addAt = this->stringToSeconds(this->linTimeQte->text());
     AddQte *addQte = new AddQte(addAt, this->level);
     commandManager->execute(addQte);
+    this->isSaved = false;
+}
+
+void LevelEditor::slotDeleteEvent()
+{
+    int deleteAt = this->stringToSeconds(this->linSelectedEvent->text());
+    if(this->radioQte->isChecked())
+    {
+        RemoveQte *removeQte = new RemoveQte(deleteAt, this->level);
+        commandManager->execute(removeQte);
+    }
+    else
+    {
+        RemoveTarget *removeTarget = new RemoveTarget(deleteAt, this->level);
+        commandManager->execute(removeTarget);
+    }
+    this->isSaved = false;
 }
 
 void LevelEditor::slotUndo()
@@ -134,5 +178,22 @@ void LevelEditor::slotRedo()
 
 void LevelEditor::slotSave()
 {
-    this->level->exportLevel();
+    this->level->exportLevel(this->isNewLevel, this);
+}
+
+void LevelEditor::slotBack()
+{
+    if(!this->isSaved)
+    {
+        QMessageBox::StandardButton reply;
+        reply = QMessageBox::question(this, "Unsaved changes", "Save the document?",
+                                    QMessageBox::Yes|QMessageBox::No);
+        if (reply == QMessageBox::Yes && !this->isNewLevel)
+        {
+            this->slotSave();
+            emit signalBackClicked();
+            return;
+        }
+    }
+    emit signalBackClicked();
 }

@@ -15,7 +15,7 @@ class Level : public QObject
 public:
     Level(QString filePath);
     Level();
-    void exportLevel();
+    void exportLevel(bool isNewLevel, QWidget* parent);
     void importLevel();
     void addTarget(int timeSeconds);
     void addQTE(int timeSeconds);

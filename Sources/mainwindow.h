@@ -38,7 +38,10 @@ public slots:
     void slotLoggedIn();
     void slotQuit();
     void slotPlay(QString levelName);
+    void slotNewGame();
     void slotGameOver();
     void slotLevelEditor();
+    void slotNewLevel();
+    void slotBackToMainscreen();
 };
 #endif // MAINWINDOW_H

@@ -76,10 +76,9 @@ void Login::slotReturnHandler()
                     //Connected
                 }
             }
-
             if (!isConnected)
             {
-                qDebug() << "username or password is incorrect";
+                qDebug() << "username or password is incorrect here";
             }
         }
         catch (...) {

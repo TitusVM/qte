@@ -165,6 +165,7 @@ void Gameplay::slotUpdate()
         QMessageBox msgBox;
         msgBox.setText("GG ! Score : " + QString::number(score) + " (Max : " + QString::number(qteTotal*50 + targetTotal*100) + ")");
         msgBox.exec();
+        emit signalGameOver();
     }
 
     if (qteTotal != 0)
