@@ -17,7 +17,7 @@ public:
     Gameplay(QWidget *parent = nullptr);
     void createUI();
     int randomCoord(int max);
-    void Play(QString levelName);
+    void Play(QString levelName, bool isCustom);
     void clearTargets();
     void clearQtes();
 

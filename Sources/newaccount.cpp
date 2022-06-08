@@ -2,6 +2,7 @@
 #include <QVBoxLayout>
 #include <QPushButton>
 #include <QDebug>
+#include <QMessageBox>
 
 #include "newaccount.h"
 #include "login.h"
@@ -16,9 +17,11 @@ NewAccount::NewAccount(QWidget *parent)
 
     this->linePassword = new QLineEdit();
     this->linePassword->setPlaceholderText(tr("Password"));
+    this->linePassword->setEchoMode(QLineEdit::Password);
 
     this->lineVerifPassword = new QLineEdit();
     this->lineVerifPassword->setPlaceholderText(tr("Password"));
+    this->lineVerifPassword->setEchoMode(QLineEdit::Password);
 
     this->btnSubmit = new QPushButton(tr("Submit"));
     this->btnBack = new QPushButton(tr("Back"));
@@ -64,17 +67,26 @@ void NewAccount::slotSubmit()
             if (password == this->lineVerifPassword->text())
             {
                 out << "\n" << this->username << " , " << this->password;
-                qDebug() << "yay worked";
-                //Connected
+                emit signalLoggedIn();
+            }
+            else
+            {
+                QMessageBox msgBox;
+                msgBox.setText("Passwords don't match");
+                msgBox.exec();
             }
         }
         else
         {
-            qDebug() << "user already exists";
+            QMessageBox msgBox;
+            msgBox.setText("User already exists");
+            msgBox.exec();
         }
 
     }  catch (...) {
-        qDebug() << "Error occured while opening or writing file";
+        QMessageBox msgBox;
+        msgBox.setText("Error occured while opening users file");
+        msgBox.exec();
     }
 }
 

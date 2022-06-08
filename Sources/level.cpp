@@ -1,9 +1,16 @@
 #include <QFileDialog>
 #include "level.h"
 
-Level::Level(QString filePath)
+Level::Level(QString filePath, bool isCustom)
 {
-    this->fileName = ":/Levels/" + filePath;
+    if(isCustom)
+    {
+        this->fileName = filePath;
+    }
+    else
+    {
+        this->fileName = ":/Levels/" + filePath;
+    }
     this->totalSeconds = 0;
 }
 

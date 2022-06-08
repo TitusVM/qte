@@ -13,7 +13,7 @@ class Level : public QObject
 {
     Q_OBJECT
 public:
-    Level(QString filePath);
+    Level(QString filePath, bool isCustom);
     Level();
     void exportLevel(bool isNewLevel, QWidget* parent);
     void importLevel();
@@ -26,7 +26,6 @@ public:
     void setName(QString levelName);
     void sortQtes();
     void sortTargets();
-
 
     QList<int> targetsSeconds;
     QList<int> qtesSeconds;

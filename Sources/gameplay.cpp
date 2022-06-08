@@ -87,9 +87,9 @@ void Gameplay::slotPlayCustom()
     // un autre truc
 }
 
-void Gameplay::Play(QString levelName)
+void Gameplay::Play(QString levelName, bool isCustom)
 {
-    level = new Level(levelName);
+    level = new Level(levelName, isCustom);
     level->importLevel();
 
     this->lblLevelName->setText("Level name : " + levelName.split(".").at(0));

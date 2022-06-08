@@ -37,7 +37,7 @@ public slots:
     void slotBackToLogin();
     void slotLoggedIn();
     void slotQuit();
-    void slotPlay(QString levelName);
+    void slotPlay(QString levelName, bool isCustom);
     void slotNewGame();
     void slotGameOver();
     void slotLevelEditor();

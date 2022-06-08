@@ -23,8 +23,6 @@ MainScreen::MainScreen(QWidget *parent, QString username)
 
     createUI();
     setMinimumSize(QSize(500,250));
-    qDebug() << "size : " << this->size();
-    qDebug() << "here as : " << this->username;
 }
 
 void MainScreen::createUI()

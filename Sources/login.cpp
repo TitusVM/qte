@@ -4,6 +4,7 @@
 #include <QVBoxLayout>
 #include <QPushButton>
 #include <QDebug>
+#include <QMessageBox>
 
 Login::Login(QWidget *parent)
     : QWidget(parent)
@@ -70,19 +71,21 @@ void Login::slotReturnHandler()
                 QStringList newLine = line.split(" , ");
                 if(this->username == newLine.at(0) && this->password == newLine.at(1))
                 {
-                    qDebug() << "yay worked";
                     emit signalLoggedIn();
                     isConnected = true;
-                    //Connected
                 }
             }
             if (!isConnected)
             {
-                qDebug() << "username or password is incorrect here";
+                QMessageBox msgBox;
+                msgBox.setText("Username or password incorrect");
+                msgBox.exec();
             }
         }
         catch (...) {
-            qDebug() << "Error occured while opening or writing file";
+            QMessageBox msgBox;
+            msgBox.setText("Error opening users file");
+            msgBox.exec();
         }
     }
 }

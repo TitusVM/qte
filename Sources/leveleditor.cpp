@@ -14,9 +14,10 @@ LevelEditor::LevelEditor(bool isNewLevel, QWidget *parent) : QWidget(parent)
     this->isNewLevel = isNewLevel;
     this->isSaved = true;
     this->level = nullptr;
+
     if(!isNewLevel)
     {
-        this->level = new Level(QFileDialog::getOpenFileName(this, tr("Open Level"), ".", tr("Level Files (*.csv)")));
+        this->level = new Level(QFileDialog::getOpenFileName(this, tr("Open Level"), ".", tr("Level Files (*.csv)")), true);
         if(this->level != nullptr) this->level->importLevel();
         else
         {
@@ -28,6 +29,7 @@ LevelEditor::LevelEditor(bool isNewLevel, QWidget *parent) : QWidget(parent)
     {
         this->level = new Level();
     }
+
     this->eventManager = new EventManager(this->level);
 
     this->commandManager = new CommandManager();
@@ -178,7 +180,18 @@ void LevelEditor::slotRedo()
 
 void LevelEditor::slotSave()
 {
-    this->level->exportLevel(this->isNewLevel, this);
+    if(true) // TODO test timeSecondes
+    {
+        this->level->exportLevel(this->isNewLevel, this);
+    }
+    else
+    {
+        try {
+            this->level = new Level(QFileDialog::getOpenFileName(this, tr("Open Level"), ".", tr("Level Files (*.csv)")), true);
+            this->level->exportLevel(this->isNewLevel, this);
+        }  catch (...) {
+        }
+    }
 }
 
 void LevelEditor::slotBack()
@@ -191,6 +204,7 @@ void LevelEditor::slotBack()
         if (reply == QMessageBox::Yes && !this->isNewLevel)
         {
             this->slotSave();
+            this->isSaved = true;
             emit signalBackClicked();
             return;
         }

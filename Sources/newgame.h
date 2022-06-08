@@ -25,7 +25,7 @@ private:
     QLabel *lblNewGame;
     QLabel *lblDefaultLevels;
     QLabel *lblCustomLevels;
-    QComboBox *cbxSelectCustomLevels;
+    QPushButton *btnSelectCustom;
 
     QGridLayout *grid;
 
@@ -36,7 +36,7 @@ private slots:
     void slotPlayCustom();
 
 signals:
-    void signalLevelPlay(QString levelName);
+    void signalLevelPlay(QString levelName, bool isCustom);
 };
 
 #endif // NEWGAME_H

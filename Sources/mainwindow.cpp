@@ -18,6 +18,7 @@ void MainWindow::createUI()
     connect(this->loginWindow, &Login::signalNewAcc, this, &MainWindow::slotNewAcc);
     connect(this->loginWindow, &Login::signalLoggedIn, this, &MainWindow::slotLoggedIn);
     connect(this->newAccountWindow, &NewAccount::signalBack, this, &MainWindow::slotBackToLogin);
+    connect(this->newAccountWindow, &NewAccount::signalLoggedIn, this, &MainWindow::slotLoggedIn);
     connect(this->mainScreenWindow, &MainScreen::signalQuit, this, &MainWindow::slotQuit);
     connect(this->mainScreenWindow, &MainScreen::signalNewGame, this, &MainWindow::slotNewGame);
     connect(this->loginWindow, &Login::signalLoggedIn, this, &MainWindow::slotLoggedIn);
@@ -57,6 +58,8 @@ void MainWindow::slotLoggedIn()
 void MainWindow::slotNewLevel()
 {
     this->levelEditorWindow = new LevelEditor(true);
+    connect(this->levelEditorWindow, &LevelEditor::signalBackClicked, this, &MainWindow::slotBackToMainscreen);
+
     takeCentralWidget();
     setCentralWidget(this->levelEditorWindow);
 }
@@ -64,10 +67,11 @@ void MainWindow::slotNewLevel()
 void MainWindow::slotLevelEditor()
 {
     this->levelEditorWindow = new LevelEditor(false);
+    connect(this->levelEditorWindow, &LevelEditor::signalBackClicked, this, &MainWindow::slotBackToMainscreen);
+
     takeCentralWidget();
     setCentralWidget(this->levelEditorWindow);
-    connect(this->levelEditorWindow, &LevelEditor::signalBackClicked, this, &MainWindow::slotBackToMainscreen);
-}
+ }
 
 void MainWindow::slotQuit()
 {
@@ -80,11 +84,11 @@ void MainWindow::slotNewGame()
     setCentralWidget(this->newGameWindow);
 }
 
-void MainWindow::slotPlay(QString levelName)
+void MainWindow::slotPlay(QString levelName, bool isCustom)
 {
     takeCentralWidget();
     setCentralWidget(this->gameplayWindow);
-    this->gameplayWindow->Play(levelName);
+    this->gameplayWindow->Play(levelName, isCustom);
 }
 
 void MainWindow::slotGameOver()
