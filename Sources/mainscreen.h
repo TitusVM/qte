@@ -22,6 +22,7 @@ private:
     // UI
     //QtELogo *qtELogo;
     QPushButton *btnNewGame;
+    QPushButton *btnNewLevel;
     QPushButton *btnEditCreate;
     QPushButton *btnCredits;
     QPushButton *btnQuit;
@@ -30,13 +31,16 @@ private:
 
 public slots:
     void slotNewGame();
+    void slotNewLevel();
     void slotEditCreate();
     void slotCredits();
     void slotQuit();
 
 signals:
+    void signalNewLevel();
     void signalQuit();
     void signalLevelEditor();
+    void signalNewGame();
 	
 	
 	

@@ -55,6 +55,11 @@ void GraphicsScene::keyPressEvent(QKeyEvent *event)
 {
     try
     {
+        if(event->key() >= 0xffff)
+        {
+            return;
+        }
+
         if (this->key == (QChar)event->key() && this->qte)
         {
             this->qte = false;

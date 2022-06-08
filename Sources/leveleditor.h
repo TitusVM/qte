@@ -7,12 +7,17 @@
 #include <QLabel>
 #include <QComboBox>
 #include <QGridLayout>
+#include <QGroupBox>
+#include <QRadioButton>
+#include <QMessageBox>
 
 #include "level.h"
 #include "eventmanager.h"
 #include "commandmanager.h"
 #include "addtarget.h"
+#include "removetarget.h"
 #include "addqte.h"
+#include "removeqte.h"
 
 
 /**
@@ -25,9 +30,11 @@ class LevelEditor : public QWidget
 {
     Q_OBJECT
 public:
-    LevelEditor(QWidget *parent = nullptr);
+    LevelEditor(bool isNewLevel, QWidget *parent = nullptr);
 
 private:
+    bool isNewLevel;
+    bool isSaved;
 
     QPushButton *btnUndo;
     QPushButton *btnRedo;
@@ -37,16 +44,19 @@ private:
     QLineEdit *linTimeTarget;
     //QPushButton *btnAddMovTarget;
     //QPushButton *btnAddGrowTarget;
+
     QPushButton *btnDeleteEvent;
     QLineEdit *linSelectedEvent;
+    QGroupBox *radioGroup;
+    QRadioButton *radioTarget;
+    QRadioButton *radioQte;
 
     QPushButton *btnAddQte;
     QLineEdit *linTimeQte;
 
     QPushButton *btnManage;
     QPushButton *btnCreate;
-    //QPushButton *btnBack;
-    //QPushButton *btnQuit;
+    QPushButton *btnBack;
 
     //QString filePath;
 
@@ -65,14 +75,19 @@ private:
     int stringToSeconds(QString timeString);
     CommandManager *commandManager;
 
-
 // Slots
 private slots:
     void slotAddTarget();
     void slotAddQte();
+    void slotDeleteEvent();
     void slotUndo();
     void slotRedo();
     void slotSave();
+    void slotBack();
+
+// Signals
+signals:
+    void signalBackClicked();
 
 };
 

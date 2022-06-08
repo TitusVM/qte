@@ -63,6 +63,10 @@ set(PROJECT_SOURCES
         addtarget.cpp
         addqte.h
         addqte.cpp
+        removeqte.h
+        removeqte.cpp
+        removetarget.h
+        removetarget.cpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

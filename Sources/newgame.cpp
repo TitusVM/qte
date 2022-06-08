@@ -3,6 +3,7 @@
 #include <QPushButton>
 #include <QComboBox>
 #include <QGridLayout>
+#include <QFileDialog>
 #include "level.h"
 
 NewGame::NewGame(QWidget *parent) : QWidget(parent)
@@ -19,15 +20,14 @@ NewGame::NewGame(QWidget *parent) : QWidget(parent)
     this->btnNormal = new QPushButton(tr("Normal"));
     this->btnHard = new QPushButton(tr("Hard"));
 
-    this->cbxSelectCustomLevels = new QComboBox();
-    this->cbxSelectCustomLevels->addItem(tr("test"));
+    this->btnSelectCustom = new QPushButton("Browse");
 
     this->btnPlayCustom = new QPushButton(tr("Play Level"));
 
     connect(this->btnEasy, &QPushButton::clicked, this, &NewGame::slotSelectEasy);
     connect(this->btnNormal, &QPushButton::clicked, this, &NewGame::slotSelectNormal);
     connect(this->btnHard, &QPushButton::clicked, this, &NewGame::slotSelectHard);
-    connect(this->btnPlayCustom, &QPushButton::clicked, this, &NewGame::slotPlayCustom);
+    connect(this->btnSelectCustom, &QPushButton::clicked, this, &NewGame::slotPlayCustom);
 
     createUI();
 }
@@ -40,7 +40,7 @@ void NewGame::createUI()
     this->grid->addWidget(this->btnNormal, 3, 1);
     this->grid->addWidget(this->btnHard, 4, 1);
     this->grid->addWidget(this->lblCustomLevels, 6, 1);
-    this->grid->addWidget(this->cbxSelectCustomLevels, 7, 1);
+    this->grid->addWidget(this->btnSelectCustom, 7, 1);
     this->grid->addWidget(this->btnPlayCustom, 8, 1);
 
     //Spaces
@@ -54,22 +54,24 @@ void NewGame::createUI()
 void NewGame::slotSelectEasy()
 {
     QString levelName ="Easy.csv";
-    emit signalLevelPlay(levelName);
+    emit signalLevelPlay(levelName, false);
 }
 
 void NewGame::slotSelectNormal()
 {
     QString levelName ="Normal.csv";
-    emit signalLevelPlay(levelName);
+    emit signalLevelPlay(levelName, false);
 }
 
 void NewGame::slotSelectHard()
 {
     QString levelName ="Hard.csv";
-    emit signalLevelPlay(levelName);
+    emit signalLevelPlay(levelName, false);
 }
 
 void NewGame::slotPlayCustom()
 {
-    // un autre truc
+    qDebug() << "oho";
+    QString levelName = QFileDialog::getOpenFileName(this, tr("Open Level"), ".", tr("Level Files (*.csv)"));
+    emit signalLevelPlay(levelName, true);
 }

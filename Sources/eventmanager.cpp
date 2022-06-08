@@ -61,4 +61,5 @@ void EventManager::slotLevelChanged()
 {
     this->listViewTargets->setModel(this->fetchModelTarget());
     this->listViewQtes->setModel(this->fetchModelQte());
+    //emit signalListSelectedTarget;
 }

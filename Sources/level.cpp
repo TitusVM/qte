@@ -1,15 +1,21 @@
+#include <QFileDialog>
 #include "level.h"
 
-Level::Level(QString filePath)
+Level::Level(QString filePath, bool isCustom)
 {
-
-    this->fileName = ":/Levels/" + filePath;
+    if(isCustom)
+    {
+        this->fileName = filePath;
+    }
+    else
+    {
+        this->fileName = ":/Levels/" + filePath;
+    }
     this->totalSeconds = 0;
 }
 
 Level::Level()
 {
-    this->fileName = "";
     this->totalSeconds = 0;
 }
 
@@ -22,7 +28,6 @@ void Level::importLevel()
         qDebug() << "Error reading file " + this->fileName;
         return;
     }
-
 
     QString line;
     QStringList events;
@@ -63,8 +68,20 @@ void Level::importLevel()
 }
 
 
-void Level::exportLevel()
+void Level::exportLevel(bool isNewLevel, QWidget* parent)
 {
+    if(this->qtesSeconds.last() >= this->targetsSeconds.last())
+    {
+        this->totalSeconds = this->qtesSeconds.last();
+    }
+    else
+    {
+        this->totalSeconds = this->targetsSeconds.last();
+    }
+    if(isNewLevel)
+    {
+        this->fileName = QFileDialog::getSaveFileName(parent, tr("Save Level"), ".", tr("Level Files (*.csv)"));
+    }
     QFile file(this->fileName);
     if (!file.open(QIODevice::ReadWrite | QIODevice::Text))
     {
@@ -73,18 +90,18 @@ void Level::exportLevel()
     }
 
     QTextStream out(&file);
-    out << "Qt-eMitus;";
-    out << totalSeconds;
-    for(int i = 0; i <=totalSeconds;i++)
+    out << "Qt-eMitus;\n";
+    out << totalSeconds << "\n";
+    for(int i = 0; i <= totalSeconds; i++)
     {
         if (qtesSeconds.contains(i))
         {
-            out << "qte;\n" << i << "\n";
+            out << "qte;" + QString::number(i) << "\n";
         }
 
         if (targetsSeconds.contains(i))
         {
-            out << "target;" << i << "\n";
+            out << "target;" + QString::number(i) << "\n";
         }
     }
     file.close();

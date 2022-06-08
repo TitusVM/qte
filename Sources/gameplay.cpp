@@ -87,9 +87,9 @@ void Gameplay::slotPlayCustom()
     // un autre truc
 }
 
-void Gameplay::Play(QString levelName)
+void Gameplay::Play(QString levelName, bool isCustom)
 {
-    level = new Level(levelName);
+    level = new Level(levelName, isCustom);
     level->importLevel();
 
     this->lblLevelName->setText("Level name : " + levelName.split(".").at(0));
@@ -165,6 +165,7 @@ void Gameplay::slotUpdate()
         QMessageBox msgBox;
         msgBox.setText("GG ! Score : " + QString::number(score) + " (Max : " + QString::number(qteTotal*50 + targetTotal*100) + ")");
         msgBox.exec();
+        emit signalGameOver();
     }
 
     if (qteTotal != 0)

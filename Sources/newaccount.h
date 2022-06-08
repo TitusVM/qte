@@ -31,6 +31,7 @@ public slots:
 
 signals:
     void signalBack();
+    void signalLoggedIn();
 
 };
 
