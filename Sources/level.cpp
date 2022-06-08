@@ -3,13 +3,13 @@
 Level::Level(QString filePath)
 {
 
-    this->fileName = filePath;
+    this->fileName = ":/Levels/" + filePath;
     this->totalSeconds = 0;
 }
 
 Level::Level()
 {
-    this->filePath = "";
+    this->fileName = "";
     this->totalSeconds = 0;
 }
 
@@ -146,28 +146,6 @@ void Level::updateQte(int oldTimeSeconds, int newTimeSeconds)
     }
 }
 
-void Level::removeTarget(int timeSeconds)
-{
-    this->targetsSeconds.removeAt(timeSeconds);
-}
-
-void Level::removeQte(int timeSeconds)
-{
-    this->qtesSeconds.removeAt(timeSeconds);
-}
-
-void Level::updateTarget(int oldTimeSeconds, int newTimeSeconds)
-{
-    this->targetsSeconds.removeAt(oldTimeSeconds);
-    this->targetsSeconds.append(newTimeSeconds);
-}
-
-void Level::updateQte(int oldTimeSeconds, int newTimeSeconds)
-{
-    this->qtesSeconds.removeAt(oldTimeSeconds);
-    this->qtesSeconds.append(newTimeSeconds);
-}
-
 void Level::setName(QString levelName)
 {
     this->levelName = levelName;
@@ -184,4 +162,3 @@ void Level::sortTargets()
     std::sort(this->targetsSeconds.begin(), this->targetsSeconds.end());
     emit signalLevelChanged();
 }
-

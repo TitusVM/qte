@@ -35,3 +35,13 @@ void CommandManager::redo()
         this->undoActionStack->push(this->redoActionStack->pop());
     }
 }
+
+int CommandManager::getUndoActionStackLength()
+{
+    return this->undoActionStack->length();
+}
+
+int CommandManager::getRedoActionStackLength()
+{
+    return this->redoActionStack->length();
+}

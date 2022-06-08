@@ -13,8 +13,8 @@ class Level : public QObject
 {
     Q_OBJECT
 public:
-    Level(QString filePath);
     Level();
+    Level(QString filePath);
     void exportLevel();
     void importLevel();
     void addTarget(int timeSeconds);
@@ -27,7 +27,7 @@ public:
     void sortQtes();
     void sortTargets();
 
-
+public:
     QList<int> targetsSeconds;
     QList<int> qtesSeconds;
 

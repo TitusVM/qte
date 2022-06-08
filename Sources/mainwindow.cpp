@@ -29,9 +29,9 @@ void MainWindow::createUI()
 
     //setCentralWidget(this->loginWindow);
     //setCentralWidget(this->newGameWindow);
-    this->widgetStack->push(this->newGameWindow);
+
     this->widgetStack->push(this->gameplayWindow);
-    setCentralWidget(this->mainScreenWindow);
+    setCentralWidget(this->newGameWindow);
     //setCentralWidget(this->newGameWindow);
     //this->widgetStack->push(this->newGameWindow);
     //this->widgetStack->push(this->gameplayWindow);

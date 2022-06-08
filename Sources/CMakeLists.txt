@@ -110,9 +110,9 @@ FetchContent_Declare(
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
-add_executable(tests tests.cpp)
+add_executable(tests tests.cpp commandmanager.cpp addtarget.cpp addqte.cpp level.cpp)
 target_include_directories(tests PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
-target_link_libraries(tests gtest_main)
+target_link_libraries(tests gtest_main Qt${QT_VERSION_MAJOR}::Widgets)
 
 include(GoogleTest)
 gtest_discover_tests(tests)

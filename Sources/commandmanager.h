@@ -11,7 +11,9 @@ public:
     ~CommandManager();
     void execute(Action_I *action);
     void undo();
+    int getUndoActionStackLength();
     void redo();
+    int getRedoActionStackLength();
     // void clear(); /* Not sure if this is useful */
 
 private:
