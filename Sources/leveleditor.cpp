@@ -70,9 +70,6 @@ LevelEditor::LevelEditor(bool isNewLevel, QWidget *parent) : QWidget(parent)
     this->btnManage = new QPushButton(tr("Manage Events"));
     this->btnCreate = new QPushButton(tr("Save Level"));
 
-    // TODO
-    // this->level = new Level();
-
     this->mainLayout = new QGridLayout();
 
     connect(this->btnAddTarget, &QPushButton::clicked, this, &LevelEditor::slotAddTarget);
@@ -180,18 +177,7 @@ void LevelEditor::slotRedo()
 
 void LevelEditor::slotSave()
 {
-    if(true) // TODO test timeSecondes
-    {
-        this->level->exportLevel(this->isNewLevel, this);
-    }
-    else
-    {
-        try {
-            this->level = new Level(QFileDialog::getOpenFileName(this, tr("Open Level"), ".", tr("Level Files (*.csv)")), true);
-            this->level->exportLevel(this->isNewLevel, this);
-        }  catch (...) {
-        }
-    }
+    this->level->exportLevel(this->isNewLevel, this);
 }
 
 void LevelEditor::slotBack()

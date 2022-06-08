@@ -70,18 +70,25 @@ void Level::importLevel()
 
 void Level::exportLevel(bool isNewLevel, QWidget* parent)
 {
-    if(this->qtesSeconds.last() >= this->targetsSeconds.last())
+    qDebug() << "1";
+    if (qtesSeconds.isEmpty() && targetsSeconds.isEmpty()) {
+        this->totalSeconds = 0;
+    }
+    else if(this->qtesSeconds.last() >= this->targetsSeconds.last())
     {
+
         this->totalSeconds = this->qtesSeconds.last();
     }
     else
     {
         this->totalSeconds = this->targetsSeconds.last();
     }
+    qDebug() << "2";
     if(isNewLevel)
     {
         this->fileName = QFileDialog::getSaveFileName(parent, tr("Save Level"), ".", tr("Level Files (*.csv)"));
     }
+    qDebug() << "3";
     QFile file(this->fileName);
     if (!file.open(QIODevice::ReadWrite | QIODevice::Text))
     {
