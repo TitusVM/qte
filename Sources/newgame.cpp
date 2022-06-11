@@ -71,7 +71,6 @@ void NewGame::slotSelectHard()
 
 void NewGame::slotPlayCustom()
 {
-    qDebug() << "oho";
     QString levelName = QFileDialog::getOpenFileName(this, tr("Open Level"), ".", tr("Level Files (*.csv)"));
     emit signalLevelPlay(levelName, true);
 }

@@ -97,6 +97,9 @@ void Gameplay::Play(QString levelName, bool isCustom)
 
     this->seconds = 0;
 
+    clearTargets();
+    clearQtes();
+
     this->timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(slotUpdate()));
     timer->start(1000);

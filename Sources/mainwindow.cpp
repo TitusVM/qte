@@ -95,7 +95,7 @@ void MainWindow::slotPlay(QString levelName, bool isCustom)
 void MainWindow::slotGameOver()
 {
     takeCentralWidget();
-    setCentralWidget(this->newGameWindow);
+    setCentralWidget(this->mainScreenWindow);
 }
 
 void MainWindow::slotBackToMainscreen()
