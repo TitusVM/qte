@@ -3,7 +3,7 @@
 
 #include <QWidget>
 #include <QPushButton>
-#include <QVBoxLayout>
+#include <QGridLayout>
 #include <QPixmap>
 
 class MainScreen : public QWidget
@@ -24,16 +24,14 @@ private:
     QPushButton *btnNewGame;
     QPushButton *btnNewLevel;
     QPushButton *btnEditCreate;
-    QPushButton *btnCredits;
     QPushButton *btnQuit;
 
-    QVBoxLayout *vbox;
+    QGridLayout *grid;
 
 public slots:
     void slotNewGame();
     void slotNewLevel();
     void slotEditCreate();
-    void slotCredits();
     void slotQuit();
 
 signals:

@@ -22,6 +22,7 @@ private:
     QPushButton *btnNormal;
     QPushButton *btnHard;
     QPushButton *btnPlayCustom;
+    QPushButton *btnBack;
     QLabel *lblNewGame;
     QLabel *lblDefaultLevels;
     QLabel *lblCustomLevels;
@@ -34,9 +35,11 @@ private slots:
     void slotSelectNormal();
     void slotSelectHard();
     void slotPlayCustom();
+    void slotBack();
 
 signals:
     void signalLevelPlay(QString levelName, bool isCustom);
+    void signalBackClicked();
 };
 
 #endif // NEWGAME_H

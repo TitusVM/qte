@@ -23,11 +23,13 @@ NewGame::NewGame(QWidget *parent) : QWidget(parent)
     this->btnSelectCustom = new QPushButton("Browse");
 
     this->btnPlayCustom = new QPushButton(tr("Play Level"));
+    this->btnBack = new QPushButton(tr("Back"));
 
     connect(this->btnEasy, &QPushButton::clicked, this, &NewGame::slotSelectEasy);
     connect(this->btnNormal, &QPushButton::clicked, this, &NewGame::slotSelectNormal);
     connect(this->btnHard, &QPushButton::clicked, this, &NewGame::slotSelectHard);
     connect(this->btnSelectCustom, &QPushButton::clicked, this, &NewGame::slotPlayCustom);
+    connect(this->btnBack, &QPushButton::clicked, this, &NewGame::slotBack);
 
     createUI();
 }
@@ -42,6 +44,7 @@ void NewGame::createUI()
     this->grid->addWidget(this->lblCustomLevels, 6, 1);
     this->grid->addWidget(this->btnSelectCustom, 7, 1);
     this->grid->addWidget(this->btnPlayCustom, 8, 1);
+    this->grid->addWidget(this->btnBack, 9, 1);
 
     //Spaces
     this->grid->addWidget(new QLabel(), 5, 1);
@@ -73,4 +76,9 @@ void NewGame::slotPlayCustom()
 {
     QString levelName = QFileDialog::getOpenFileName(this, tr("Open Level"), ".", tr("Level Files (*.csv)"));
     emit signalLevelPlay(levelName, true);
+}
+
+void NewGame::slotBack()
+{
+    emit signalBackClicked();
 }

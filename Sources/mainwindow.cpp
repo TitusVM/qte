@@ -23,6 +23,7 @@ void MainWindow::createUI()
     connect(this->mainScreenWindow, &MainScreen::signalNewGame, this, &MainWindow::slotNewGame);
     connect(this->loginWindow, &Login::signalLoggedIn, this, &MainWindow::slotLoggedIn);
     connect(this->newGameWindow, &NewGame::signalLevelPlay, this, &MainWindow::slotPlay);
+    connect(this->newGameWindow, &NewGame::signalBackClicked, this, &MainWindow::slotBackToMainscreen);
     connect(this->gameplayWindow, &Gameplay::signalGameOver, this, &MainWindow::slotGameOver);
     connect(this->mainScreenWindow, &MainScreen::signalNewLevel, this, &MainWindow::slotNewLevel);
     connect(this->mainScreenWindow, &MainScreen::signalLevelEditor, this, &MainWindow::slotLevelEditor);

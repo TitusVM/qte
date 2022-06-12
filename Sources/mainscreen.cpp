@@ -2,6 +2,7 @@
 #include "level.h"
 #include <QDebug>
 #include <QGraphicsView>
+#include <QLabel>
 
 MainScreen::MainScreen(QWidget *parent, QString username)
     : QWidget(parent)
@@ -10,30 +11,30 @@ MainScreen::MainScreen(QWidget *parent, QString username)
     this->btnNewGame = new QPushButton(tr("New Game"));
     this->btnNewLevel = new QPushButton(tr("New Level"));
     this->btnEditCreate = new QPushButton(tr("Edit Level"));
-    this->btnCredits = new QPushButton(tr("Credits"));
     this->btnQuit = new QPushButton(tr("Quit"));
 
     connect(this->btnNewGame, &QPushButton::clicked, this, &MainScreen::slotNewGame);
     connect(this->btnNewLevel, &QPushButton::clicked, this, &MainScreen::slotNewLevel);
     connect(this->btnEditCreate, &QPushButton::clicked, this, &MainScreen::slotEditCreate);
-    connect(this->btnCredits, &QPushButton::clicked, this, &MainScreen::slotCredits);
     connect(this->btnQuit, &QPushButton::clicked, this, &MainScreen::slotQuit);
 
-    this->vbox = new QVBoxLayout();
+    this->grid = new QGridLayout();
 
     createUI();
-    setMinimumSize(QSize(500,250));
+    setMinimumSize(QSize(1200, 600));
 }
 
 void MainScreen::createUI()
 {
-    this->vbox->addWidget(this->btnNewGame);
-    this->vbox->addWidget(this->btnNewLevel);
-    this->vbox->addWidget(this->btnEditCreate);
-    this->vbox->addWidget(this->btnCredits);
-    this->vbox->addWidget(this->btnQuit);
+    this->grid->addWidget(this->btnNewGame, 1, 1);
+    this->grid->addWidget(this->btnNewLevel, 2, 1);
+    this->grid->addWidget(this->btnEditCreate, 3, 1);
+    this->grid->addWidget(this->btnQuit, 5, 1);
+    this->grid->addWidget(new QLabel(), 0, 0);
+    this->grid->addWidget(new QLabel(), 4, 2);
+    this->grid->addWidget(new QLabel(), 5, 0);
 
-    setLayout(this->vbox);
+    setLayout(this->grid);
 }
 
 void MainScreen::createNewGame()
@@ -67,11 +68,6 @@ void MainScreen::slotNewLevel()
 void MainScreen::slotEditCreate()
 {
     createLevelEditor();
-}
-
-void MainScreen::slotCredits()
-{
-    qDebug() << "slotCredits called";
 }
 
 void MainScreen::slotQuit()
