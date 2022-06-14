@@ -97,6 +97,17 @@ void Gameplay::Play(QString levelName, bool isCustom)
 
     this->seconds = 0;
 
+    this->qteHit = 0;
+    this->qteTotal = 0;
+    this->targetHit = 0;
+    this->targetTotal = 0;
+    this->lblNumberQTEs->setText("0");
+    this->lblAccuracyQTEs->setText("Accuracy : 0/0");
+    this->lblAccuracyQTEsPourcentage->setText("0%");
+    this->lblNumberTargets->setText("0");
+    this->lblAccuracyTargets->setText("Accuracy : 0/0");
+    this->lblAccuracyTargetsPourcentage->setText("0%");
+
     clearTargets();
     clearQtes();
 
