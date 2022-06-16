@@ -5,6 +5,10 @@
 #include <QPixmap>
 #include <QKeyEvent>
 
+/**
+ * @brief GraphicsScene::GraphicsScene Constructor
+ * @param parent
+ */
 GraphicsScene::GraphicsScene(Gameplay *parent) : QGraphicsScene(parent)
 {
     target = false;
@@ -12,22 +16,37 @@ GraphicsScene::GraphicsScene(Gameplay *parent) : QGraphicsScene(parent)
     this->parent = parent;
 }
 
+/**
+ * @brief GraphicsScene::setX
+ * @param value
+ */
 void GraphicsScene::setX(int value)
 {
     this->x = value;
 }
 
+/**
+ * @brief GraphicsScene::setY
+ * @param value
+ */
 void GraphicsScene::setY(int value)
 {
     this->y = value;
 }
 
+/**
+ * @brief GraphicsScene::setKey
+ * @param key
+ */
 void GraphicsScene::setKey(QChar key)
 {
     this->key = key;
 }
 
-
+/**
+ * @brief GraphicsScene::mousePressEvent checks whether the mouse event was on Target or not
+ * @param event
+ */
 void GraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     if (event->button() == Qt::LeftButton)
@@ -51,6 +70,10 @@ void GraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent *event)
     }
 }
 
+/**
+ * @brief GraphicsScene::keyPressEvent checks whether the key event was the same as what was asked for in the Qte
+ * @param event
+ */
 void GraphicsScene::keyPressEvent(QKeyEvent *event)
 {
     try
@@ -74,7 +97,6 @@ void GraphicsScene::keyPressEvent(QKeyEvent *event)
     }
     catch (...)
     {
-
+    // Simply to avoid that the programm crashes if system keys are pressed for instance
     }
-
 }

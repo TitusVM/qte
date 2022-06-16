@@ -2,15 +2,12 @@
 #include <QFileDialog>
 
 /**
- * @brief LevelEditor::LevelEditor
+ * @brief LevelEditor::LevelEditor Constructor, initializing attributes and connecting signals to slots
+ * @param isNewLevel
  * @param parent
- *
- * Public Constructor, initializing attributes and connecting signals to slots
  */
 LevelEditor::LevelEditor(bool isNewLevel, QWidget *parent) : QWidget(parent)
 {
-    //this->btnAddMovTarget = new QPushButton(tr("Add Moving Target"));
-   // this->btnAddGrowTarget = new QPushButton(tr("Add Growing Target"));
     this->isNewLevel = isNewLevel;
     this->isSaved = true;
     this->level = nullptr;
@@ -165,21 +162,33 @@ void LevelEditor::slotDeleteEvent()
     this->isSaved = false;
 }
 
+/**
+ * @brief LevelEditor::slotUndo
+ */
 void LevelEditor::slotUndo()
 {
     this->commandManager->undo();
 }
 
+/**
+ * @brief LevelEditor::slotRedo
+ */
 void LevelEditor::slotRedo()
 {
     this->commandManager->redo();
 }
 
+/**
+ * @brief LevelEditor::slotSave
+ */
 void LevelEditor::slotSave()
 {
     this->level->exportLevel(this->isNewLevel, this);
 }
 
+/**
+ * @brief LevelEditor::slotBack
+ */
 void LevelEditor::slotBack()
 {
     if(!this->isSaved)

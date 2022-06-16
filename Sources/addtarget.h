@@ -4,6 +4,11 @@
 #include "action_i.h"
 #include "level.h"
 
+/**
+ * @brief The AddTarget class implements the Action_I interface for the purpose of adding a Target event
+ * to the sequential event structure (Level in this particular case)
+ */
+
 class AddTarget : public Action_I
 {
 public:

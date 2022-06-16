@@ -10,6 +10,13 @@ class QGraphicsView;
 class GraphicsScene;
 class Level;
 
+
+/**
+ * @brief The Gameplay class extends QWidget and is where the game actually takes place. Here the Level container is sequentially
+ * read and the events are drawn out in two seperate displays. There is one display for the target and another
+ * display for the Qtes. It also launches a timer to be able to keep the events of the Level structure
+ * synchronised.
+ */
 class Gameplay : public QWidget
 {
     Q_OBJECT

@@ -3,7 +3,11 @@
 #include <QDebug>
 #include <QGraphicsView>
 #include <QLabel>
-
+/**
+ * @brief MainScreen::MainScreen Constructor, initializes UI
+ * @param parent
+ * @param username
+ */
 MainScreen::MainScreen(QWidget *parent, QString username)
     : QWidget(parent)
 {
@@ -24,6 +28,9 @@ MainScreen::MainScreen(QWidget *parent, QString username)
     setMinimumSize(QSize(1200, 600));
 }
 
+/**
+ * @brief MainScreen::createUI adds to layout
+ */
 void MainScreen::createUI()
 {
     this->grid->addWidget(this->btnNewGame, 1, 1);
@@ -37,39 +44,61 @@ void MainScreen::createUI()
     setLayout(this->grid);
 }
 
+/**
+ * @brief MainScreen::createNewGame
+ */
 void MainScreen::createNewGame()
 {
 
 }
 
+/**
+ * @brief MainScreen::createLevelEditor
+ */
 void MainScreen::createLevelEditor()
 {
     emit signalLevelEditor();
 }
 
+/**
+ * @brief MainScreen::showCredits
+ */
 void MainScreen::showCredits()
 {
 
 }
 
 // Slots
-
+/**
+ * @brief MainScreen::slotNewGame
+ * Emits signalNewGame();
+ */
 void MainScreen::slotNewGame()
 {
     emit signalNewGame();
 }
 
+/**
+ * @brief MainScreen::slotNewLevel
+ * Emits signalNewLevel();
+ */
 void MainScreen::slotNewLevel()
 {
     emit signalNewLevel();
 }
 
-
+/**
+ * @brief MainScreen::slotEditCreate
+ */
 void MainScreen::slotEditCreate()
 {
     createLevelEditor();
 }
 
+/**
+ * @brief MainScreen::slotQuit
+ * Emits signalQuit();
+ */
 void MainScreen::slotQuit()
 {
     emit signalQuit();

@@ -21,9 +21,12 @@
 
 
 /**
- * @brief The LevelEditor class
+ * @brief The LevelEditor class extends QWidget and is a User Interface for editing existing or non-existing levels. It
+ * contains necessary visual elements to manipulate a chosen Level. Or even create a new Level and
+ * save it using the Level::exportLevel() method.
  *
- * Interface for editing existing or non-existing levels.
+ * More about the usage of the LevelEditor User Interface can be read in the User Documentation found
+ * at https://gitlab-etu.ing.he-arc.ch/isc/2021-22/niveau-2/2282-1-projet-p2-il-sp/g3/-/wikis/Documentation-Utilisateur
  */
 
 class LevelEditor : public QWidget
@@ -42,8 +45,6 @@ private:
 
     QPushButton *btnAddTarget;
     QLineEdit *linTimeTarget;
-    //QPushButton *btnAddMovTarget;
-    //QPushButton *btnAddGrowTarget;
 
     QPushButton *btnDeleteEvent;
     QLineEdit *linSelectedEvent;
@@ -57,8 +58,6 @@ private:
     QPushButton *btnManage;
     QPushButton *btnCreate;
     QPushButton *btnBack;
-
-    //QString filePath;
 
     QLineEdit *linName;
 

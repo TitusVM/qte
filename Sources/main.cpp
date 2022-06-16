@@ -3,6 +3,12 @@
 #include <QApplication>
 #include <QDebug>
 
+/**
+ * @brief main The main function of the programm
+ * @param argc
+ * @param argv
+ * @return
+ */
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);

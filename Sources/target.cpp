@@ -3,6 +3,12 @@
 #include <QGraphicsScene>
 #include <math.h>
 
+/**
+ * @brief Target::Target Constructor, initializes the QGraphicsScene and the coordinates
+ * @param x
+ * @param y
+ * @param parent
+ */
 Target::Target(int x, int y, QGraphicsScene *parent)
 {
     this->scene = parent;
@@ -10,7 +16,9 @@ Target::Target(int x, int y, QGraphicsScene *parent)
     this->y = &y;
 }
 
-
+/**
+ * @brief Target::draw implements the draw method to draw on the object's QGraphicsScene
+ */
 void Target::draw()
 {
     QPen pen = QPen();
@@ -28,6 +36,10 @@ void Target::draw()
     this->scene->addEllipse(*(this->x)+30, *(this->y)+30, 10, 10, pen);
 }
 
+/**
+ * @brief Target::mousePressEvent handles the mouse event
+ * @param event
+ */
 void Target::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     if (event->button() & Qt::LeftButton)
@@ -36,6 +48,14 @@ void Target::mousePressEvent(QGraphicsSceneMouseEvent *event)
     }
 }
 
+/**
+ * @brief Target::clicked Handles the scoring based on the coordinates of the event
+ * @param centerX
+ * @param centerY
+ * @param clickedX
+ * @param clickedY
+ * @return
+ */
 int Target::clicked(int centerX, int centerY, int clickedX, int clickedY)
 {
     int vectorX = clickedX - (centerX+35);

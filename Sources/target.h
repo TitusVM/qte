@@ -5,6 +5,10 @@
 #include <QDebug>
 #include <QGraphicsSceneMouseEvent>
 
+/**
+ * @brief The Target class is the implementation of an event in the sequential event structure. It holds the
+ * necessary information to display a Target at a particular time in the Level.
+ */
 class Target
 {
 public:

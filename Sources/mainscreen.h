@@ -6,6 +6,16 @@
 #include <QGridLayout>
 #include <QPixmap>
 
+/**
+ * @brief The MainScreen class extends QWidget and provides a User Interface for the main controls of the program. It sends
+ * signals back to the MainWindow, which does all the window changing. The User Interface contains 4
+ * options:
+ *      - New Game, starts the NewGame screen
+ *      - New Level, starts the LevelEditor with a new Level
+ *      - Edit Level, starts the LevelEditor which will ask to chose an existing Level
+ *      - Quit, which quits the programm
+ */
+
 class MainScreen : public QWidget
 {
     Q_OBJECT

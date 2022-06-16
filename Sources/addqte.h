@@ -6,6 +6,11 @@
 
 #include <QChar>
 
+/**
+ * @brief The AddQte class implements the Action_I interface for the purpose of adding a QTE event
+ * to the sequential event structure (Level in this particular case)
+ */
+
 class AddQte : public Action_I
 {
 public:

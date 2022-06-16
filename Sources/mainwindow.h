@@ -11,6 +11,18 @@
 #include <QMainWindow>
 #include <QStack>
 
+/**
+ * @brief The MainWindow class extends QMainWindow and handles the general User Interface of the application.
+ * It also handles all the signals coming from the various QWidgets it contains. All the various UIs of the
+ * application are contained, instanciated and executed in this class. All the window changes are done in this
+ * class as well. The two methods most useful to window changes are:
+ *
+ *      - QMainWindow::takeCentralWidget() allows you to remove the currently shown central widget
+ *      - QMainWindow::setCentralWidget(QWidget) allows you to show given widget as central widget
+ *
+ * All the slots in this class are made to capture underlying signals coming from the various interfaces
+ */
+
 class MainWindow : public QMainWindow
 {
     Q_OBJECT

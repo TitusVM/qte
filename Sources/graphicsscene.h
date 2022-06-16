@@ -3,7 +3,11 @@
 
 #include <QGraphicsScene>
 #include "gameplay.h"
-
+/**
+ * @brief The GraphicsScene class is a custom class extending the QGraphicsScene. It allows the capturing
+ * of mouse click events and position of said events. It also captures hit keyboard keys and tests them
+ * against the sequential event structure (in this case a Level object).
+ */
 class GraphicsScene : public QGraphicsScene
 {
     Q_OBJECT

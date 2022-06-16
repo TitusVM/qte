@@ -1,6 +1,10 @@
 #include "eventmanager.h"
 #include <QAbstractItemView>
 
+/**
+ * @brief EventManager::EventManager Constructor creates the User Interface with given Level.
+ * @param level
+ */
 EventManager::EventManager(Level *level) : QWidget(nullptr)
 {
     this->level = level;
@@ -14,6 +18,9 @@ EventManager::EventManager(Level *level) : QWidget(nullptr)
     createUI();
 }
 
+/**
+ * @brief EventManager::createUI delegate function to create Level
+ */
 void EventManager::createUI()
 {
     this->listViewTargets->setModel(this->fetchModelTarget());
@@ -23,6 +30,10 @@ void EventManager::createUI()
     setLayout(this->hbox);
 }
 
+/**
+ * @brief EventManager::fetchModelTarget gets all the Target events as QStandardItemModel pointer
+ * @return QStandardItemModel*
+ */
 QStandardItemModel* EventManager::fetchModelTarget()
 {
     QStandardItem *item;
@@ -39,6 +50,10 @@ QStandardItemModel* EventManager::fetchModelTarget()
     return model;
 }
 
+/**
+ * @brief EventManager::fetchModelQte gets all the Qte events as QStandardItemModel pointer
+ * @return QStandardItemModel*
+ */
 QStandardItemModel* EventManager::fetchModelQte()
 {
     QStandardItem *item;
@@ -56,10 +71,11 @@ QStandardItemModel* EventManager::fetchModelQte()
 }
 
 // SLOTS
-
+/**
+ * @brief EventManager::slotLevelChanged updates the lists in the user interface with the updated models
+ */
 void EventManager::slotLevelChanged()
 {
     this->listViewTargets->setModel(this->fetchModelTarget());
     this->listViewQtes->setModel(this->fetchModelQte());
-    //emit signalListSelectedTarget;
 }

@@ -6,6 +6,10 @@
 #include <QDebug>
 #include <QMessageBox>
 
+/**
+ * @brief Login::Login Constructor, initializes user interface
+ * @param parent
+ */
 Login::Login(QWidget *parent)
     : QWidget(parent)
 {
@@ -31,6 +35,9 @@ Login::Login(QWidget *parent)
     createUI();
 }
 
+/**
+ * @brief Login::createUI fills layout
+ */
 void Login::createUI()
 {
     vbox = new QVBoxLayout();
@@ -42,11 +49,19 @@ void Login::createUI()
 }
 
 // SLOTS
+/**
+ * @brief Login::slotNewAcc
+ */
 void Login::slotNewAcc()
 {
     emit Login::signalNewAcc();
 }
 
+/**
+ * @brief Login::slotReturnHandler handles the connection logic of the requested Login
+ *
+ * Emits signalLoggedIn() if everything is working to plan
+ */
 void Login::slotReturnHandler()
 {
     if (this->linePassword->text().isEmpty() && !this->lineUsername->text().isEmpty())

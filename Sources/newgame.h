@@ -8,6 +8,12 @@ class QPushButton;
 class QComboBox;
 class QGridLayout;
 
+/**
+ * @brief The NewGame class extends QWidget and provides a User Interface to start a new Level. A detailed
+ * description of this UI can be found in the User documentation which can be found here: https://gitlab-etu.ing.he-arc.ch/isc/2021-22/niveau-2/2282-1-projet-p2-il-sp/g3/-/wikis/Documentation-Utilisateur
+ * It has several Level selection options and also a browse button which is there so the user can select a custom Level.
+ */
+
 class NewGame : public QWidget
 {
     Q_OBJECT

@@ -12,6 +12,10 @@
 #include <QTimer>
 #include <QMessageBox>
 
+/**
+ * @brief Gameplay::Gameplay Constructor builds the User Interface for the Gameplay Screen
+ * @param parent
+ */
 Gameplay::Gameplay(QWidget *parent) : QWidget(parent)
 {
     this->grid = new QGridLayout();
@@ -55,7 +59,11 @@ Gameplay::Gameplay(QWidget *parent) : QWidget(parent)
     viewTargets->setFocus();
 }
 
-
+/**
+ * @brief Gameplay::randomCoord returns a random coordinate for the target location RNG
+ * @param max screen limit
+ * @return int radomCoord random coordinate
+ */
 int Gameplay::randomCoord(int max)
 {
     return QRandomGenerator::global()->bounded(6, max-76);
@@ -77,16 +85,27 @@ void Gameplay::createUI()
     setLayout(this->grid);
 }
 
+/**
+ * @brief Gameplay::slotSelectDifficulty slot that allows the selection of difficulties
+ */
 void Gameplay::slotSelectDifficulty()
 {
-    // truc
+    // FUTURE IMPLEMENTS
 }
 
+/**
+ * @brief Gameplay::slotPlayCustom slot that allows custom Level objects to be played
+ */
 void Gameplay::slotPlayCustom()
 {
-    // un autre truc
+    // FUTURE IMPLEMENTS
 }
 
+/**
+ * @brief Gameplay::Play the play method triggers the gameplay to start
+ * @param levelName QString Name of level to be played
+ * @param isCustom bool to signify if it is a new Level or if it already exists
+ */
 void Gameplay::Play(QString levelName, bool isCustom)
 {
     level = new Level(levelName, isCustom);
@@ -116,6 +135,9 @@ void Gameplay::Play(QString levelName, bool isCustom)
     timer->start(1000);
 }
 
+/**
+ * @brief Gameplay::slotUpdate update visuals
+ */
 void Gameplay::slotUpdate()
 {
     if (!this->sceneTargets->target)
@@ -201,21 +223,33 @@ void Gameplay::slotUpdate()
     this->lblSecondsLeft->setText("Seconds left : " + QString::number(this->level->totalSeconds - seconds));
 }
 
+/**
+ * @brief Gameplay::slotRepaintTarget
+ */
 void Gameplay::slotRepaintTarget()
 {
     clearTargets();
 }
 
+/**
+ * @brief Gameplay::slotRepaintQTE
+ */
 void Gameplay::slotRepaintQTE()
 {
     clearQtes();
 }
 
+/**
+ * @brief Gameplay::clearTargets
+ */
 void Gameplay::clearTargets()
 {
     this->sceneTargets->clear();
 }
 
+/**
+ * @brief Gameplay::clearQtes
+ */
 void Gameplay::clearQtes()
 {
     this->sceneQTEs->clear();

@@ -1,12 +1,19 @@
 #include "mainwindow.h"
 #include <QDebug>
 
+/**
+ * @brief MainWindow::MainWindow Constructor Initialize UI
+ * @param parent
+ */
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
     createUI();
 }
 
+/**
+ * @brief MainWindow::createUI Create UI elements and connect required signals to slots for window changes
+ */
 void MainWindow::createUI()
 {
     this->loginWindow = new Login();
@@ -37,26 +44,36 @@ MainWindow::~MainWindow()
 
 
 // SLOTS
+/**
+ * @brief MainWindow::slotNewAcc
+ */
 void MainWindow::slotNewAcc()
 {
-    //this->loginWindow->setParent(NULL); TODO ADD TO DOC
     takeCentralWidget();
     setCentralWidget(this->newAccountWindow);
 }
 
+/**
+ * @brief MainWindow::slotBackToLogin
+ */
 void MainWindow::slotBackToLogin()
 {
-    //this->newAccountWindow->setParent(NULL); TODO ADD TO DOC
     takeCentralWidget();
     setCentralWidget(this->loginWindow);
 }
 
+/**
+ * @brief MainWindow::slotLoggedIn
+ */
 void MainWindow::slotLoggedIn()
 {
     takeCentralWidget();
     setCentralWidget(this->mainScreenWindow);
 }
 
+/**
+ * @brief MainWindow::slotNewLevel
+ */
 void MainWindow::slotNewLevel()
 {
     this->levelEditorWindow = new LevelEditor(true);
@@ -66,6 +83,9 @@ void MainWindow::slotNewLevel()
     setCentralWidget(this->levelEditorWindow);
 }
 
+/**
+ * @brief MainWindow::slotLevelEditor
+ */
 void MainWindow::slotLevelEditor()
 {
     this->levelEditorWindow = new LevelEditor(false);
@@ -73,19 +93,30 @@ void MainWindow::slotLevelEditor()
 
     takeCentralWidget();
     setCentralWidget(this->levelEditorWindow);
- }
+}
 
+/**
+ * @brief MainWindow::slotQuit
+ */
 void MainWindow::slotQuit()
 {
     close();
 }
 
+/**
+ * @brief MainWindow::slotNewGame
+ */
 void MainWindow::slotNewGame()
 {
     takeCentralWidget();
     setCentralWidget(this->newGameWindow);
 }
 
+/**
+ * @brief MainWindow::slotPlay
+ * @param levelName
+ * @param isCustom
+ */
 void MainWindow::slotPlay(QString levelName, bool isCustom)
 {
     takeCentralWidget();
@@ -93,12 +124,18 @@ void MainWindow::slotPlay(QString levelName, bool isCustom)
     this->gameplayWindow->Play(levelName, isCustom);
 }
 
+/**
+ * @brief MainWindow::slotGameOver
+ */
 void MainWindow::slotGameOver()
 {
     takeCentralWidget();
     setCentralWidget(this->mainScreenWindow);
 }
 
+/**
+ * @brief MainWindow::slotBackToMainscreen
+ */
 void MainWindow::slotBackToMainscreen()
 {
     takeCentralWidget();

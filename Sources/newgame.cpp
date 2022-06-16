@@ -6,6 +6,10 @@
 #include <QFileDialog>
 #include "level.h"
 
+/**
+ * @brief NewGame::NewGame Constructor, initializes UI elements
+ * @param parent
+ */
 NewGame::NewGame(QWidget *parent) : QWidget(parent)
 {
     this->grid = new QGridLayout();
@@ -34,6 +38,9 @@ NewGame::NewGame(QWidget *parent) : QWidget(parent)
     createUI();
 }
 
+/**
+ * @brief NewGame::createUI adds to layout
+ */
 void NewGame::createUI()
 {
     this->grid->addWidget(this->lblNewGame, 0, 1);
@@ -54,30 +61,45 @@ void NewGame::createUI()
     setLayout(this->grid);
 }
 
+/**
+ * @brief NewGame::slotSelectEasy
+ */
 void NewGame::slotSelectEasy()
 {
     QString levelName ="Easy.csv";
     emit signalLevelPlay(levelName, false);
 }
 
+/**
+ * @brief NewGame::slotSelectNormal
+ */
 void NewGame::slotSelectNormal()
 {
     QString levelName ="Normal.csv";
     emit signalLevelPlay(levelName, false);
 }
 
+/**
+ * @brief NewGame::slotSelectHard
+ */
 void NewGame::slotSelectHard()
 {
     QString levelName ="Hard.csv";
     emit signalLevelPlay(levelName, false);
 }
 
+/**
+ * @brief NewGame::slotPlayCustom
+ */
 void NewGame::slotPlayCustom()
 {
     QString levelName = QFileDialog::getOpenFileName(this, tr("Open Level"), ".", tr("Level Files (*.csv)"));
     emit signalLevelPlay(levelName, true);
 }
 
+/**
+ * @brief NewGame::slotBack
+ */
 void NewGame::slotBack()
 {
     emit signalBackClicked();

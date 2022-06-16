@@ -4,7 +4,10 @@
 #include "level.h"
 
 #include <QChar>
-
+/**
+ * @brief The RemoveQte class implements the Action_I interface for the purpose of removing a Qte event
+ * from the sequential event structure (Level in this particular case)
+ */
 class RemoveQte : public Action_I
 {
 public:

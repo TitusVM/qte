@@ -8,7 +8,10 @@
 #include "login.h"
 
 
-
+/**
+ * @brief NewAccount::NewAccount Constructor, initializes UI elements
+ * @param parent
+ */
 NewAccount::NewAccount(QWidget *parent)
     : QWidget(parent)
 {
@@ -32,6 +35,9 @@ NewAccount::NewAccount(QWidget *parent)
     createUI();
 }
 
+/**
+ * @brief NewAccount::createUI adds to layout
+ */
 void NewAccount::createUI()
 {
     QVBoxLayout *vbox = new QVBoxLayout();
@@ -44,6 +50,11 @@ void NewAccount::createUI()
 }
 
 // SLOTS
+
+/**
+ * @brief NewAccount::slotSubmit handles a new account request and logic
+ * Emits signalLoggedIn();
+ */
 void NewAccount::slotSubmit()
 {
     QFile file("users.txt");
@@ -90,6 +101,10 @@ void NewAccount::slotSubmit()
     }
 }
 
+/**
+ * @brief NewAccount::slotBack
+ * Emits signalBack();
+ */
 void NewAccount::slotBack()
 {
     emit NewAccount::signalBack();
